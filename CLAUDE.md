@@ -20,7 +20,7 @@ Everything for Kingdom First Covenant lives in this repo (Zimfaz/kingdom-first-c
 - Words: "introduction" (never "match"), "close this introduction", "What you share / Things to talk about", no scores or percentages, no swiping, likes, streaks, read receipts or "last active".
 - A private "I feel pressured, or I'm worried about my safety" line in every conversation, unseen by companions, with UK help numbers and same-day review.
 - Timing (reviewers): prototype in December; build after the KFL January update; London waitlist after Easter 2027, closed beta summer 2027, UK launch about September 2027. Before launch: solicitor (Online Safety Act, UK GDPR special category data, Equality Act on Christians-only and man–woman introductions, trade mark classes 9, 42, 45), a second trained moderator, an independent safeguarding adviser, a reader from each tradition.
-- Prototype: covenant/prototype/index.html, published at https://claude.ai/artifact/EaGskjLFELNQ2ewDfKs91g (34 screens; brand colours are the brand reviewer's proposal, not decided).
+- Prototype: prototype/index.html, published at https://claude.ai/artifact/EaGskjLFELNQ2ewDfKs91g (34 screens; brand colours are the brand reviewer's proposal, not decided).
 
 ## Carried over from Kingdom First Life
 - Plain English, short sentences; check every screen on small and large phones, light and dark, before showing the owner.
@@ -29,4 +29,4 @@ Everything for Kingdom First Covenant lives in this repo (Zimfaz/kingdom-first-c
 - Safeguarding first: adults only; report, block and removal everywhere; never enter payments or credentials for the owner; the owner does all account, store and payment steps.
 
 - Colours (owner, 24 Nov 2026): brand/colours.json in the repo is the only source of colour for everything made for this app too (videos, slides, PDFs, store images). Family colours come from Kingdom First Life's app; this app's own accent stays a proposal until the owner decides.
-- Build (owner, 24 Nov 13:38): React Native with Expo; own Supabase project kingdom-first-covenant (covenant/supabase-link.md); repo Zimfaz/kingdom-first-covenant (this repo; the app is at the root: app/ screens, src/ theme and components, supabase/migrations). Plan: reviews/native-build-plan-2026-11-24.md (KFL repo).
+- Build (owner, 24 Nov 13:38): React Native with Expo; own Supabase project kingdom-first-covenant (supabase-link.md); repo Zimfaz/kingdom-first-covenant (this repo; the app is at the root: app/ screens, src/ theme and components, supabase/migrations). Plan: reviews/native-build-plan-2026-11-24.md (KFL repo).
