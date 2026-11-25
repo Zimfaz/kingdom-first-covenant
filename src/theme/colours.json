@@ -1,0 +1,31 @@
+{
+  "_source": "Copied from brand/colours.json (KFL repo). Covenant's own accent is a PROPOSAL, not decided (covenant/CLAUDE.md). Never type a hex value in a screen; use these tokens. Dark accents from covenant.dark (proposal).",
+  "light": {
+    "bg": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "sunk": "#F3F0EA",
+    "ink": "#2A1840",
+    "muted": "#645A73",
+    "line": "#E4DDEB",
+    "accent": "#7B2D3B",
+    "onAccent": "#FFFFFF",
+    "tint": "#F4E7E9",
+    "pray": "#E4D8F3",
+    "prayInk": "#3F2163",
+    "chip": "#ECE7DF"
+  },
+  "dark": {
+    "bg": "#0F1424",
+    "surface": "#19203A",
+    "sunk": "#222A47",
+    "ink": "#F4F3EF",
+    "muted": "#A3A8BC",
+    "line": "#2C345A",
+    "accent": "#E4A6A0",
+    "onAccent": "#19203A",
+    "tint": "#3A2533",
+    "pray": "#2E2747",
+    "prayInk": "#C9B2F2",
+    "chip": "#222A47"
+  }
+}

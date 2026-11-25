@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 580" width="800" height="580" role="img" aria-label="Wordmark concept">
+<title>Kingdom First Covenant wordmark concept, light and dark (concept only, not approved)</title>
+<rect width="800" height="580" fill="#E9E4DA"/>
+<g transform="translate(20 20)">
+<rect width="760" height="260" rx="20" fill="#FFFFFF"/>
+<g transform="translate(48 70) scale(1)"><path fill="#19203A" d="M14 90 L9 14 L36 40 L60 2 L84 40 L111 14 L106 90 Z"/><path fill="#CBAA6A" d="M12 96h96v10H12Z"/></g>
+<text x="190" y="132" font-family="Cormorant Garamond" font-weight="600" font-size="54" letter-spacing="5" fill="#221636">KINGDOM FIRST</text>
+<text x="190" y="196" font-family="Cormorant Garamond" font-style="italic" font-weight="600" font-size="64" fill="#7B2D3B">Covenant</text>
+</g>
+<g transform="translate(20 300)">
+<rect width="760" height="260" rx="20" fill="#19203A"/>
+<g transform="translate(48 70) scale(1)"><path fill="#F3EEE4" d="M14 90 L9 14 L36 40 L60 2 L84 40 L111 14 L106 90 Z"/><path fill="#CBAA6A" d="M12 96h96v10H12Z"/></g>
+<text x="190" y="132" font-family="Cormorant Garamond" font-weight="600" font-size="54" letter-spacing="5" fill="#F3EEE4">KINGDOM FIRST</text>
+<text x="190" y="196" font-family="Cormorant Garamond" font-style="italic" font-weight="600" font-size="64" fill="#E4A6A0">Covenant</text>
+</g>
+</svg>

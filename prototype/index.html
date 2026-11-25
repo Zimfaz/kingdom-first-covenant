@@ -1,0 +1,514 @@
+<title>Covenant Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Kingdom First Covenant: clickable prototype (23 Nov 2026). Brand colours are the brand reviewer's PROPOSAL, not decided. */
+:root{--bg:#FAF7F2;--surface:#FFFFFF;--sunk:#F3EEE6;--ink:#221636;--muted:#5E556C;--line:#E6DED2;--accent:#7B2D3B;--on-accent:#F3EEE4;--tint:#F4E7E9;--tint-ink:#7B2D3B;--pray:#E4D8F3;--pray-ink:#3F2163;--warn-bg:#FFF4E5;--warn-ink:#6B4300;--stage:#E9E4DA;--frame:#19203A;--chip:#ECE7DF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#19203A;--surface:#232B48;--sunk:#1E2540;--ink:#F3EEE4;--muted:#B9B3C6;--line:#353E60;--accent:#E4A6A0;--on-accent:#19203A;--tint:#3A2533;--tint-ink:#E4A6A0;--pray:#2E2747;--pray-ink:#C9B2F2;--warn-bg:#3A3020;--warn-ink:#F2D49B;--stage:#0E1222;--frame:#000;--chip:#2B3352;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#19203A;--surface:#232B48;--sunk:#1E2540;--ink:#F3EEE4;--muted:#B9B3C6;--line:#353E60;--accent:#E4A6A0;--on-accent:#19203A;--tint:#3A2533;--tint-ink:#E4A6A0;--pray:#2E2747;--pray-ink:#C9B2F2;--warn-bg:#3A3020;--warn-ink:#F2D49B;--stage:#0E1222;--frame:#000;--chip:#2B3352;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--stage);color:var(--ink);font:400 1rem/1.55 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.stage{min-height:100%;display:flex;justify-content:center;align-items:flex-start;gap:32px;padding:28px 16px}
+.side{width:300px;flex:none;position:sticky;top:28px;max-height:calc(100vh - 56px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.side h1{font:600 1.5rem/1.15 "Cormorant Garamond",Georgia,serif;margin:0 0 4px}
+.side p{margin:0 0 10px;color:var(--muted);font-size:.86rem}
+.side h2{font:600 .72rem "IBM Plex Sans",system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:14px 0 4px}
+.side button.jump{display:block;width:100%;text-align:left;border:0;background:none;padding:5px 8px;border-radius:8px;font-size:.88rem;cursor:pointer;color:var(--ink)}
+.side button.jump:hover,.side button.jump.on{background:var(--tint);color:var(--tint-ink)}
+.seg{display:flex;gap:4px;background:var(--sunk);border-radius:10px;padding:3px;margin:6px 0}
+.seg button{flex:1;border:0;background:none;border-radius:8px;padding:6px;font-size:.82rem;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--surface);color:var(--ink)}
+.phone{width:390px;height:844px;flex:none;border-radius:46px;background:var(--frame);padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column}
+.scroll{flex:1;overflow-y:auto;padding:58px 20px 24px}
+.scroll.notabs{padding-bottom:32px}
+.tabs{flex:none;display:flex;justify-content:space-around;border-top:1px solid var(--line);background:var(--surface);padding:6px 8px 26px}
+.tabs button{flex:1;border:0;background:none;padding:6px 2px;border-radius:12px;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tabs button.on{color:var(--accent);background:var(--tint)}
+.tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.back{border:0;background:none;color:var(--accent);font-weight:600;padding:8px 0;cursor:pointer;min-height:44px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{width:40px;height:40px;flex:none}
+.brand .wm{font:600 .95rem/1.05 "Cormorant Garamond",Georgia,serif;letter-spacing:.14em}
+.brand .wm i{display:block;font:italic 600 1.35rem/1 "Cormorant Garamond",Georgia,serif;letter-spacing:0;color:var(--accent)}
+h1.t{font:600 2rem/1.12 "Cormorant Garamond",Georgia,serif;margin:6px 0 10px;text-wrap:balance}
+h2.t{font:600 1.45rem/1.2 "Cormorant Garamond",Georgia,serif;margin:18px 0 8px;text-wrap:balance}
+.lead{font:italic 500 1.25rem/1.4 "Cormorant Garamond",Georgia,serif;margin:0 0 14px;text-wrap:balance}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.eyebrow{font:600 .74rem "IBM Plex Sans",system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.verse{font:italic 500 1.1rem/1.45 "Cormorant Garamond",Georgia,serif;margin:14px 0 4px;text-wrap:balance}
+.ref{font:600 .72rem "IBM Plex Sans",system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;margin:0 0 12px}
+.card h3{font:700 1.25rem/1.2 "Cormorant Garamond",Georgia,serif;margin:0 0 4px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;border-radius:14px;border:1.5px solid var(--accent);background:var(--surface);color:var(--ink);font:600 1rem "IBM Plex Sans",system-ui,sans-serif;cursor:pointer;margin:8px 0;padding:10px 16px;text-align:center}
+.btn.pri{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn.quiet{border-color:var(--line)}
+.link{border:0;background:none;color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:10px 0;min-height:44px;text-align:left}
+.opts{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px;cursor:pointer;min-height:48px;width:100%}
+.opt .dot{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);margin-top:2px}
+.opt.check .dot{border-radius:6px}
+.opt.on{border-color:var(--accent);background:var(--tint)}
+.opt.on .dot{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--tint)}
+.pill{display:inline-block;background:var(--chip);color:var(--muted);border-radius:999px;padding:3px 10px;font-size:.78rem;font-weight:600;margin:0 6px 6px 0}
+.pill.w{background:var(--tint);color:var(--tint-ink)}
+.list{margin:6px 0 10px;padding:0;list-style:none}
+.list li{padding:7px 0 7px 22px;position:relative;border-bottom:1px solid var(--line)}
+.list li:last-child{border-bottom:0}
+.list li:before{content:"";position:absolute;left:4px;top:15px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.list.talk li:before{background:none;border:2px solid var(--muted);width:6px;height:6px}
+details{border-top:1px solid var(--line);padding:6px 0}
+summary{cursor:pointer;font-weight:600;color:var(--accent);padding:8px 0;min-height:44px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:after{content:" ›"}
+details[open] summary:after{content:" ⌄"}
+.row{display:flex;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:14px;padding:10px 14px;background:var(--surface);cursor:pointer;width:100%;text-align:left;min-height:48px}
+.sw i{flex:none;width:44px;height:26px;border-radius:13px;background:var(--line);position:relative}
+.sw i:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:var(--surface);transition:left .15s}
+.sw.on i{background:var(--accent)}
+.sw.on i:after{left:21px}
+input[type=text],textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px;min-height:48px}
+textarea{min-height:90px;resize:vertical}
+label.f{display:block;font-weight:600;margin:12px 0 6px}
+.photo{aspect-ratio:4/5;border-radius:16px;background:linear-gradient(160deg,var(--tint),var(--sunk));display:flex;align-items:flex-end;justify-content:center;overflow:hidden;border:1px solid var(--line)}
+.photo svg{width:70%;fill:var(--muted);opacity:.55}
+.photos{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin:8px 0 12px}
+.photos .stack{display:grid;gap:8px}
+.msg{max-width:86%;margin:0 0 10px;padding:10px 12px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.msg b{display:block;font-size:.78rem;color:var(--muted);font-weight:600;margin-bottom:2px}
+.msg.me{margin-left:auto;background:var(--tint);border-color:transparent}
+.sys{font-size:.82rem;color:var(--muted);text-align:center;margin:8px 0 12px}
+.who{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.compose{display:flex;gap:8px;align-items:flex-end;margin-top:6px}
+.compose textarea{min-height:48px;height:48px}
+.compose .btn{width:auto;margin:0;min-width:84px}
+.note{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:10px 12px;font-size:.88rem;margin:8px 0}
+.prayer{background:var(--pray);color:var(--pray-ink);border-radius:14px;padding:14px;font:italic 500 1.08rem/1.45 "Cormorant Garamond",Georgia,serif;margin:10px 0}
+.qprog{font-size:.85rem;color:var(--muted);margin-bottom:6px}
+.sec{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:14px;margin:0 0 8px;cursor:pointer;width:100%;text-align:left;min-height:56px}
+.sec b{font:700 1.15rem "Cormorant Garamond",Georgia,serif}
+.sec span{font-size:.84rem;color:var(--muted);text-align:right}
+.intro{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:16px;margin:0 0 10px;cursor:pointer}
+.intro h3{font:700 1.3rem "Cormorant Garamond",Georgia,serif;margin:0}
+.proto{position:absolute;top:14px;left:50%;transform:translateX(-50%);font:600 .64rem "IBM Plex Sans",system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;background:var(--chip);color:var(--muted);border-radius:999px;padding:3px 10px;z-index:3;white-space:nowrap}
+.sheet{position:absolute;inset:0;background:rgba(10,12,24,.45);display:flex;align-items:flex-end;z-index:5}
+.sheet .in{background:var(--bg);width:100%;max-height:86%;overflow:auto;border-radius:24px 24px 0 0;padding:20px 20px 30px}
+.help dl{margin:0}.help dt{font-weight:700;margin-top:10px}.help dd{margin:2px 0 0}
+.mobile-jump{display:none}
+@media (max-width:760px){
+  .stage{padding:0;display:block}
+  .side{display:none}
+  .phone{width:100%;height:100vh;height:100dvh;border-radius:0;padding:0;box-shadow:none}
+  .screen{border-radius:0}
+  .scroll{padding-top:calc(46px + env(safe-area-inset-top))}
+  .tabs{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .mobile-jump{display:block;position:fixed;right:12px;top:calc(8px + env(safe-area-inset-top));z-index:9;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:.8rem;font-weight:600}
+  .side.open{display:block;position:fixed;inset:0;z-index:10;width:auto;max-height:none;border-radius:0;top:0}
+}
+@media (max-width:359px){h1.t{font-size:1.75rem}.scroll{padding-left:16px;padding-right:16px}}
+</style>
+<button class="mobile-jump" onclick="document.querySelector('.side').classList.toggle('open')">Screens</button>
+<div class="stage">
+  <aside class="side" aria-label="Prototype screens">
+    <h1>Kingdom First Covenant</h1>
+    <p>Clickable prototype, 23 Nov 2026. Sample people and words only; nothing is saved or sent. Brand colours are a proposal.</p>
+    <div class="seg" role="group" aria-label="Appearance"><button data-th="auto">Phone</button><button data-th="light">Light</button><button data-th="dark">Dark</button></div>
+    <div class="seg" role="group" aria-label="Who you are"><button data-sx="w">I'm a woman</button><button data-sx="m">I'm a man</button></div>
+    <div id="jumps"></div>
+    <p class="small" style="margin-top:14px">Close the list: tap a screen. On a phone, use the Screens button.</p>
+  </aside>
+  <div class="phone"><div class="screen" id="screen"></div></div>
+</div>
+<script>
+"use strict";
+const S={screen:'welcome',sex:'w',name:'Sarah',town:'Leeds',church:'Catholic (Latin, Roman)',story:'never',open:{hist:[],trad:['Catholic','Orthodox','Anglican','Protestant and free churches']},ans:{},must:new Set(),secDone:new Set(),intro:null,stage:{},msgs:null,sheet:null,paused:false,companion:null,season:false,qi:0,sec:'B',closedBy:null};
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const CROWN=`<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="26" fill="#19203A"/><g transform="translate(14 8) scale(.76)"><path fill="#F3EEE4" d="M14 90 L9 14 L36 40 L60 2 L84 40 L111 14 L106 90 Z"/><circle cx="48" cy="64" r="15" fill="none" stroke="#7B2D3B" stroke-width="6"/><circle cx="72" cy="64" r="15" fill="none" stroke="#7B2D3B" stroke-width="6"/><path d="M61.59 70.34 A15 15 0 0 1 55.50 76.99" fill="none" stroke="#F3EEE4" stroke-width="10"/><path d="M61.59 70.34 A15 15 0 0 1 55.50 76.99" fill="none" stroke="#7B2D3B" stroke-width="6"/><path d="M58.41 57.66 A15 15 0 0 1 64.50 51.01" fill="none" stroke="#F3EEE4" stroke-width="10"/><path d="M58.41 57.66 A15 15 0 0 1 64.50 51.01" fill="none" stroke="#7B2D3B" stroke-width="6"/><path fill="#CBAA6A" d="M12 96h96v10H12Z"/></g></svg>`;
+const brand=`<div class="brand">${CROWN}<div class="wm">KINGDOM FIRST<i>Covenant</i></div></div>`;
+const PERSON=`<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="36" r="18"/><path d="M12 100c2-24 18-36 38-36s36 12 38 36z"/></svg>`;
+const ICON={home:'<path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/>',intro:'<circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/>',me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/>'};
+
+/* ---------- Tier 1 questions (pastoral review round 1, §2.3–2.7) ---------- */
+const SECS=[
+ {k:'B',n:'Your faith and church',need:true,q:[
+  ['Which church families would you be open to marrying into?',['Only my own church family','Catholic','Orthodox','Anglican','Protestant and free churches','Any church that shares the faith above'],'multi'],
+  ['Have you been baptised?',['Yes, as a baby','Yes, as a believer','Yes, I was received or chrismated','Not yet; I’m preparing','I’m not sure'],'',`Your church will ask for a baptism certificate before a wedding, if you are Catholic or Orthodox.`],
+  ['How often do you worship with your church?',['Every Sunday or more','Most weeks','Sometimes','I’m looking for a church at the moment']],
+  ['Where would you hope to worship as a married couple?',['In my church','In my future spouse’s church','Each in our own, sometimes together','We’d decide together with our priest or pastor']],
+  ['Prayer together at home',['I’d love us to pray together most days','Sometimes','I’d like to learn how','I’d rather talk about it']],
+  ['The church year: fasts and feasts',['Keeping them is part of my life','I keep some','My church doesn’t follow the church year'],'',`Many Orthodox and Catholic homes keep fasts together, and it shapes family life.`],
+  ['How did faith become your own?',['I grew up with it','As an adult','Recently','It’s still growing (aren’t we all)']]]},
+ {k:'C',n:'The Church and the sacraments',q:[
+  ['Holy Communion (the Eucharist, the Lord’s Supper) is…',['the true Body and Blood of Christ','Christ truly present in a spiritual way','a memorial of His death, which we do as He commanded','I’m still learning'],'',`Christians answer these differently. There are no wrong answers here, only honest ones.`],
+  ['How does your church read Scripture?',['Scripture within the Tradition of the Church','Scripture as the final authority','Scripture, tradition and reason together','I’m not sure how to put it']],
+  ['Mary and the saints',['Asking the Theotokos / Our Lady and the saints to pray for us is part of my faith','Not my practice, but I respect it','I’m not comfortable with it']],
+  ['Confession',['I go to confession with a priest','I confess to God, sometimes with a pastor or friend','Both']],
+  ['Baptism of children',['Babies are baptised','Children are baptised when they come to faith','I’d follow our church']],
+  ['Marriage is…',['a sacrament','a holy covenant before God','both words fit for me']]]},
+ {k:'D',n:'Marriage itself',need:true,q:[
+  ['From now until our wedding, I want to keep sex for marriage.',['Yes','I’d rather talk about it'],'',`This is about from now on, not about your past.`],
+  ['Leadership and decisions in marriage',['The husband leads by serving in love; we’re equal in worth','Husband and wife lead together as equals','Somewhere between','We’d work it out with our church’s guidance'],'',`Whatever you believe about leadership in marriage, it never means control, fear or harm. Paul begins, “Submit to one another out of reverence for Christ” (Ephesians 5:21). If anyone uses Scripture to frighten or control you, please tell us.`],
+  ['After divorce, remarriage while a former spouse is living…',['My church doesn’t allow it without a declaration of nullity','My church allows it in some cases','I’d follow my church’s guidance','I’m not sure']],
+  ['Marriage preparation',['I’d want us to do our church’s marriage preparation','Yes, if our church offers it','Open']],
+  ['Work and home',['Both of us working','One of us at home while children are young','We’d decide together']],
+  ['Money',['One shared account','Shared and some of our own','We’d decide together']],
+  ['If an introduction feels right, when would you hope to be engaged?',['Within about 6 months','6–12 months','1–2 years','No timeline; when it’s right']]]},
+ {k:'E',n:'Children and family',q:[
+  ['Would you like to have or raise children?',['Yes','Open, if God gives them','I’d prefer not to','I’d rather talk about it']],
+  ['Family planning',['Natural family planning only, as my church teaches','I’d follow my conscience and my church’s guidance','I’d rather talk about it']],
+  ['Our children would be baptised and brought up in…',['my church','my future spouse’s church','we’d decide together']],
+  ['Do you have children?',['No','Yes, living with me','Yes, not living with me','I’d rather say in conversation']],
+  ['Adoption and fostering',['Yes, I’d be open','Perhaps','Not for me']],
+  ['A parent living with us one day',['Yes, I’d expect it','Perhaps','I’d hope not']]]},
+ {k:'F',n:'Everyday life',q:[
+  ['Would you move for marriage?',['Yes, anywhere in the UK','Within my region','No']],
+  ['How involved would you like your families to be?',['Very: I’d want my family’s blessing before engagement','Involved, but it’s our choice','Our choice; families come later'],'',`However involved your family is, the choice to marry is yours alone.`],
+  ['Alcohol',['I don’t drink','Sometimes','No strong view']]]}];
+
+/* ---------- Sample introductions (fictional people) ---------- */
+const INTROS={w:[
+ {id:'a',n:'Michael',age:31,town:'Leeds',church:'Catholic (Latin, Roman)',story:'Never married',share:['Marriage is a lifelong covenant','Keeping sex for marriage from now on','Children: open, if God gives them','Praying together most days'],talk:['Where to worship: you’d each like your own church','Leadership in marriage: you answered differently'],words:'I teach maths and help with my parish youth group. Sunday lunch with my family matters a lot to me.'},
+ {id:'b',n:'Daniel',age:34,town:'York',church:'Church of England',story:'Divorced, with church permission to marry again',share:['Marriage preparation together','Both of you would move within the region','Prayer at home: sometimes'],talk:['Holy Communion: you answered differently','Fasts and feasts: worth talking about'],words:'I’m a nurse. I walk the Dales on my days off and sing in our church choir.'},
+ {id:'c',n:'Samuel',age:29,town:'Bradford',church:'Coptic Orthodox',story:'Never married',share:['Keeping the fasts of the church year','Children baptised as babies','Family blessing before engagement'],talk:['His church usually asks the other partner to join the Coptic Church before a wedding. Worth asking his priest.'],words:'I’m an engineer. I serve at the altar on Sundays and love cooking for my family.'}],
+ m:[
+ {id:'a',n:'Maria',age:28,town:'Leeds',church:'Catholic (Latin, Roman)',story:'Never married',share:['Marriage is a lifelong covenant','Keeping sex for marriage from now on','Children: open, if God gives them','Praying together most days'],talk:['Where to worship: you’d each like your own church','Work and home: worth talking about'],words:'I’m a pharmacist. I sing at the 10 o’clock Mass and I’m learning to play the cello.'},
+ {id:'b',n:'Grace',age:31,town:'Wakefield',church:'Pentecostal (Elim)',story:'Widowed',share:['Prayer together most days','Marriage preparation together','Both of you would move within the region'],talk:['Holy Communion: you answered differently','Baptism of children: worth talking about'],words:'I’m a primary teacher. I lead our church’s food bank on Saturdays.'},
+ {id:'c',n:'Elena',age:32,town:'Sheffield',church:'Eastern Orthodox (Greek)',story:'Never married',share:['Keeping the fasts of the church year','Children baptised as babies','Family blessing before engagement'],talk:['Your priest would need to give permission for a wedding with a Christian of another church.'],words:'I’m an architect. I love long walks, my grandmother’s recipes and the Easter vigil.'}]};
+
+const intros=()=>INTROS[S.sex];
+const other=()=>intros().find(x=>x.id===S.intro)||intros()[0];
+
+/* ---------- helpers ---------- */
+const go=s=>{S.screen=s;S.sheet=null;render();const sc=$('.scroll');if(sc)sc.scrollTop=0;markJump()};
+const tabsFor={home:'home',intros:'intro',intro:'intro',me:'me',membership:'me',help:'me',pause:'me',leave:'me',companionMe:'me',questions:'me'};
+function tabs(on){return `<nav class="tabs" aria-label="Sections">${[['home','Home','home'],['intros','Introductions','intro'],['me','Me','me']].map(([s,l,i])=>`<button class="${on===i?'on':''}" onclick="go('${s}')" ${on===i?'aria-current="page"':''}><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[i]}</svg>${l}</button>`).join('')}</nav>`}
+const back=(to,l='Back')=>`<button class="back" onclick="go('${to}')">‹ ${l}</button>`;
+const opt=(label,on,act,check)=>`<button class="opt ${check?'check':''} ${on?'on':''}" onclick="${act}" aria-pressed="${!!on}"><span class="dot" aria-hidden="true"></span><span>${label}</span></button>`;
+const verse=(t,r)=>`<p class="verse">“${t}”</p><p class="ref">${r}</p>`;
+
+/* ---------- screens ---------- */
+const V={};
+V.welcome=()=>`<div class="scroll notabs">${brand}
+ <h1 class="t" style="margin-top:28px">Introductions for marriage, not dating.</h1>
+ <p>We introduce Christians who hope to marry, slowly and with care, in conversations that always include a companion you trust.</p>
+ <p class="muted">Marriage is a good gift from God. So is a single life lived for Him. You’re not waiting to become complete.</p>
+ ${verse('…each man has his own gift from God; one has this gift, another has that.','1 Corinthians 7:7')}
+ <div class="card" style="margin-top:18px"><ul class="list"><li>Faith and marriage questions first</li><li>Photos only when you both say yes</li><li>Every conversation includes your companions</li></ul></div>
+ <button class="btn pri" onclick="go('yes')">Begin</button>
+ <button class="link" onclick="go('signin')">I already have an account</button></div>`;
+V.yes=()=>`<div class="scroll notabs">${back('welcome')}
+ <p class="eyebrow">My yes</p><h1 class="t">Before we begin</h1>
+ <p>I’m here to be introduced for marriage, not for dating or passing time. I’ll be honest about myself, and kind and clear if an introduction isn’t right.</p>
+ ${verse('Simply let your ‘Yes’ be ‘Yes,’ and your ‘No,’ ‘No.’…','Matthew 5:37')}
+ <div class="prayer">Lord, You know me better than I know myself. Give me honesty, kindness and courage. Lead me in Your way, towards marriage or not, and keep my heart at rest in You. Amen.</div>
+ <p class="small muted">A prayer before you begin, if you’d like it.</p>
+ <button class="btn pri" onclick="go('signin')">This is my yes</button></div>`;
+V.signin=()=>`<div class="scroll notabs">${back('yes')}
+ <h1 class="t">Create your account</h1><p class="muted">Use the account you already have. We never post anything for you.</p>
+ <button class="btn pri" onclick="go('whycheck')">Continue with Apple</button>
+ <button class="btn" onclick="go('whycheck')">Continue with Google</button>
+ <button class="btn quiet" onclick="go('whycheck')">Use my email</button></div>`;
+V.whycheck=()=>`<div class="scroll notabs">${back('signin')}
+ <p class="eyebrow">Keeping everyone safe</p><h1 class="t">We check everyone’s ID</h1>
+ <p>Everyone here, and every companion, shows a photo ID and takes a short live selfie. That keeps out people under 18, fake profiles and scammers.</p>
+ <div class="card"><ul class="list"><li>Your age comes from your ID, so you never type it</li><li>Your ID images are deleted as soon as the check passes</li><li>We pay for the check; safety is never something you buy</li></ul></div>
+ <button class="btn pri" onclick="go('idcheck')">Check my ID</button></div>`;
+V.idcheck=()=>`<div class="scroll notabs">${back('whycheck')}
+ <h1 class="t">Your ID and a selfie</h1>
+ <div class="card"><p class="small muted">In the real app, our ID partner opens here: a photo of your passport or driving licence, then a short live selfie.</p>
+ <div class="photo" style="aspect-ratio:3/2">${PERSON}</div></div>
+ <button class="btn pri" onclick="go('checked')">Take the photos</button></div>`;
+V.checked=()=>`<div class="scroll notabs">
+ <h1 class="t" style="margin-top:40px">Thank you. You’re checked.</h1>
+ <p>Your ID matched your selfie, and you’re over 18. Your ID images have been deleted.</p>
+ <button class="btn pri" onclick="go('basics')">Continue</button></div>`;
+V.basics=()=>`<div class="scroll notabs">${back('checked')}
+ <p class="eyebrow">About you</p><h1 class="t">Your first name</h1>
+ <label class="f" for="nm">First name</label><input id="nm" type="text" value="${esc(S.name)}" oninput="S.name=this.value||'Sarah'">
+ <p class="small muted">Only your first name is ever shown.</p>
+ <label class="f">I am a</label>
+ <div class="opts">${opt('Woman',S.sex==='w',"S.sex='w';S.name=S.name==='David'?'Sarah':S.name;render()")}${opt('Man',S.sex==='m',"S.sex='m';S.name=S.name==='Sarah'?'David':S.name;render()")}</div>
+ <label class="f" for="tw">Where you live</label><input id="tw" type="text" value="${esc(S.town)}" oninput="S.town=this.value">
+ <p class="small muted">We show your town, never your address or postcode.</p>
+ <button class="btn pri" onclick="go('faith')">Next</button></div>`;
+V.faith=()=>`<div class="scroll notabs">${back('basics')}
+ <p class="eyebrow">The faith we share</p><h1 class="t">Do you share this faith?</h1>
+ <div class="card"><p class="lead" style="margin:0">“I believe in one God, Father, Son and Holy Spirit, and that Jesus Christ is truly God and truly man, who died for us and rose again.”</p></div>
+ <div class="card"><p style="margin:0">“Marriage is a lifelong covenant between one man and one woman.”</p><p class="small muted" style="margin:6px 0 0">The teaching of all the churches in this app.</p></div>
+ ${verse('So they are no longer two, but one flesh. Therefore what God has joined together, let man not separate.','Matthew 19:6')}
+ <button class="btn pri" onclick="go('church')">Yes, I believe this</button>
+ <button class="link" onclick="go('exploring')">I’m still exploring</button></div>`;
+V.exploring=()=>`<div class="scroll notabs">${back('faith')}
+ <h1 class="t">This app is for Christians who share this faith</h1>
+ <p>Kingdom First Covenant introduces people for a Christian marriage that every main church can bless. If you’re still exploring, we’re really glad you’re asking.</p>
+ <p>A local church, or our sister app Kingdom First Life, could be a good place to start.</p>
+ <button class="btn" onclick="go('faith')">Go back</button></div>`;
+const CH=[['Catholic',['Catholic (Latin, Roman)','Eastern Catholic: Byzantine','Eastern Catholic: Maronite, Syro-Malabar, Chaldean and others']],['Orthodox',['Eastern Orthodox (Greek, Antiochian, Romanian and others)','Eastern Orthodox (Russian, Serbian, Georgian and others)','Coptic Orthodox','Ethiopian or Eritrean Orthodox Tewahedo','Armenian Apostolic','Syriac or Malankara Orthodox']],['Anglican',['Church of England','Church in Wales','Scottish Episcopal Church','Church of Ireland']],['Protestant and free churches',['Baptist','Methodist','Pentecostal','Presbyterian or Reformed','Independent or non-denominational','Charismatic','Salvation Army','Quaker']],['Others',['I’m between churches','Another church']]];
+V.church=()=>`<div class="scroll notabs">${back('faith')}
+ <p class="eyebrow">About you</p><h1 class="t">Your church</h1>
+ <label class="f" for="ch">Which church family do you belong to?</label>
+ <select id="ch" onchange="S.church=this.value">${CH.map(([g,L])=>`<optgroup label="${g}">${L.map(x=>`<option ${x===S.church?'selected':''}>${x}</option>`).join('')}</optgroup>`).join('')}</select>
+ <label class="f" for="pa">Your parish or church (optional)</label><input id="pa" type="text" placeholder="e.g. St Anne’s, Leeds">
+ <p class="small muted">Only shown once you’re talking with someone.</p>
+ <button class="btn pri" onclick="go('story')">Next</button></div>`;
+const STORIES=[['never','I’ve never been married'],['widowed','I’m widowed'],['divorced','I’m divorced'],['nullity','I’m divorced, and my marriage has been declared null by the Church (declaration of nullity, often called an annulment)'],['permission','I’m divorced, and my church has given permission to marry again (for example an Orthodox church divorce)'],['process','I’m divorced, and a declaration of nullity or church permission is in process']];
+V.story=()=>`<div class="scroll notabs">${back('church')}
+ <p class="eyebrow">About you</p><h1 class="t">Your story so far</h1>
+ <p>Every story is welcome here. Choose the one that’s true for you. You won’t need to explain it on your profile, and nobody will ever see who has chosen not to be introduced to them.</p>
+ <div class="opts">${STORIES.map(([k,l])=>opt(l,S.story===k,`S.story='${k}';render()`)).join('')}</div>
+ ${S.story==='widowed'?`<p class="small muted">We’re sorry for your loss. Grief has no timetable, and there’s no right moment to begin again. Go at your own pace.</p>`:''}
+ ${S.story==='divorced'||S.story==='nullity'||S.story==='permission'||S.story==='process'?`<p class="small muted">You don’t have to explain what happened. If your marriage ended because you were being hurt, you did not fail God by getting safe. <button class="link small" onclick="sheet('help')">Help and support ›</button></p>`:''}
+ <p class="small muted"><b>Why we ask:</b> churches have different teaching about marriage after divorce. Telling the truth here means you’re only introduced to people who can marry you with a clear conscience, in a church that can bless it.</p>
+ <button class="link" onclick="go('separated')">I’m separated but not yet divorced</button>
+ <button class="btn pri" onclick="go('open')">Next</button></div>`;
+V.separated=()=>`<div class="scroll notabs">${back('story')}
+ <h1 class="t">Not yet, and that’s all right</h1>
+ <p>While you’re still married, even if you’re separated, Covenant can’t introduce you to anyone. We know this season can be very hard.</p>
+ <p>When your divorce (and, if your church asks, a declaration of nullity or church permission) is complete, you’re welcome back.</p>
+ <button class="link" onclick="sheet('help')">If you’re not safe at home: Get help now ›</button>
+ <button class="btn" onclick="go('story')">Go back</button></div>`;
+const OPENH=[['never','Never married'],['widowed','Widowed'],['nullity','Divorced, with a declaration of nullity'],['permission','Divorced, with church permission to marry again'],['divorced','Divorced'],['process','Declaration of nullity or permission in process']];
+const TEACH={Catholic:`The Catholic Church teaches that a valid marriage lasts for life, so a civil divorce on its own doesn’t free someone to marry again in church. A declaration of nullity (often called an annulment) is the Church’s finding, after careful inquiry, that a true marriage bond never existed. It isn’t a “Catholic divorce”, and it doesn’t make children of that marriage illegitimate. This applies to anyone a Catholic marries, whether or not they’re Catholic. A widowed person is free to marry. If you’re unsure, your parish priest can help.`,
+Orthodox:`The Orthodox Church holds that marriage is for life, and it grieves when a marriage breaks down. Out of care for its people (this is called economia), a bishop may give a church divorce and allow a second, or even a third, marriage, usually with a quieter service of repentance and hope. Each diocese has its own process, so your priest will guide you.`,
+Anglican:`The Church of England teaches that marriage is for life. Since 2002 it has accepted that, in exceptional circumstances, a divorced person may marry in church while a former husband or wife is still living. The decision rests with the priest, who may also say no.`,
+Protestant:`Churches differ. Many allow remarriage after divorce, some only where there was adultery or desertion, and a few not while a former husband or wife is living. Your church’s leaders can tell you how they see it.`};
+const myFam=()=>/Orthodox/.test(S.church)?'Orthodox':/Catholic/.test(S.church)?'Catholic':/England|Wales|Scottish|Ireland|Anglican/.test(S.church)?'Anglican':'Protestant';
+V.open=()=>`<div class="scroll notabs">${back('story')}
+ <p class="eyebrow">Who you’re open to</p><h1 class="t">Who would you be open to marrying?</h1>
+ <p>Tick everyone you could marry with a clear conscience. You can change this at any time, and nobody is told what you chose.</p>
+ <div class="opts">${OPENH.map(([k,l])=>opt(l,S.open.hist.includes(k),`tog(S.open.hist,'${k}')`,1)).join('')}</div>
+ <details><summary>Read what my church teaches</summary><p class="small">${TEACH[myFam()]}</p><p class="small muted">Your church’s teaching and your priest’s or pastor’s guidance come first. This is only a short summary.</p></details>
+ <h2 class="t">Church families</h2>
+ <div class="opts">${['Catholic','Orthodox','Anglican','Protestant and free churches'].map(k=>opt(k,S.open.trad.includes(k),`tog(S.open.trad,'${k.replace(/'/g,"\\'")}')`,1)).join('')}</div>
+ <button class="btn pri" onclick="go('questions')" ${S.open.hist.length?'':'disabled style="opacity:.5"'}>Save</button>
+ ${S.open.hist.length?'':'<p class="small muted">Choose at least one to continue. Nothing is ticked for you.</p>'}</div>`;
+window.tog=(arr,k)=>{const i=arr.indexOf(k);i<0?arr.push(k):arr.splice(i,1);render()};
+
+V.questions=()=>`<div class="scroll">${S.secDone.size?back('home','Home'):back('open')}
+ <p class="eyebrow">Tier 1</p><h1 class="t">Faith and marriage questions</h1>
+ <p>About five minutes a group. Answers save as you go. Faith and church, and Marriage itself, come first; the others can wait.</p>
+ ${SECS.map(s=>`<button class="sec" onclick="S.sec='${s.k}';S.qi=0;go('q')"><b>${s.n}</b><span>${S.secDone.has(s.k)?'Done':s.need&&!S.secDone.has(s.k)?'Needed for introductions':'Whenever you’re ready'}</span></button>`).join('')}
+ <p class="small muted">You can mark a few answers “This matters a lot to me”. Those must agree before anyone is introduced; the rest only help us order introductions. Nobody ever sees a score.</p>
+ <button class="btn pri" onclick="${SECS.find(s=>s.need&&!S.secDone.has(s.k))?`S.sec='${(SECS.find(s=>s.need&&!S.secDone.has(s.k))||SECS[0]).k}';S.qi=0;go('q')`:`go('home')`}">${SECS.find(s=>s.need&&!S.secDone.has(s.k))?'Continue':'Done for now'}</button></div>${tabs('me')}`;
+V.q=()=>{const sec=SECS.find(s=>s.k===S.sec),q=sec.q[S.qi],key=sec.k+S.qi,a=S.ans[key]||[],multi=q[2]==='multi',must=S.must.has(key);
+ return `<div class="scroll notabs">${back('questions','Questions')}
+ <p class="qprog">${sec.n}</p><h1 class="t" style="font-size:1.7rem">${q[0]}</h1>
+ ${q[3]?`<p class="small muted">${q[3]}</p>`:''}
+ <div class="opts">${q[1].map((o,i)=>opt(o,a.includes(i),`ans('${key}',${i},${multi})`,multi)).join('')}</div>
+ <button class="sw ${must?'on':''}" onclick="mustTog('${key}')" aria-pressed="${must}"><span>This matters a lot to me</span><i aria-hidden="true"></i></button>
+ ${S.must.size>=5&&!must?`<p class="small muted">You’ve marked a few already. Keeping these for what truly matters gives you more introductions.</p>`:''}
+ <button class="btn pri" onclick="qnext()">${S.qi<sec.q.length-1?'Next':'Finish this group'}</button>
+ <div class="row between"><button class="link" onclick="qnext()">Skip for now</button><button class="link" onclick="S.ans['${key}']=['x'];qnext()">I’d rather not say</button></div></div>`};
+window.ans=(k,i,m)=>{let a=S.ans[k]||[];a=a.filter(x=>x!=='x');if(m){a.includes(i)?a=a.filter(x=>x!==i):a.push(i)}else a=[i];S.ans[k]=a;render()};
+window.mustTog=k=>{S.must.has(k)?S.must.delete(k):S.must.add(k);render()};
+window.qnext=()=>{const sec=SECS.find(s=>s.k===S.sec);if(S.qi<sec.q.length-1){S.qi++;render();$('.scroll').scrollTop=0}else{S.secDone.add(sec.k);go('secdone')}};
+V.secdone=()=>{const sec=SECS.find(s=>s.k===S.sec),need=SECS.find(s=>s.need&&!S.secDone.has(s.k));
+ return `<div class="scroll notabs"><h1 class="t" style="margin-top:40px">${sec.n}: done</h1>
+ <p>Thank you for answering honestly. ${need?`Next, when you’re ready: ${need.n}.`:'You’ll receive introductions on Thursday evening.'}</p>
+ <button class="btn pri" onclick="${need?`S.sec='${need.k}';S.qi=0;go('q')`:`go('home')`}">${need?'Continue':'Go to Home'}</button>
+ ${need?`<button class="link" onclick="go('home')">That’s enough for today</button>`:''}</div>`};
+
+V.home=()=>{const ready=SECS.filter(s=>s.need).every(s=>S.secDone.has(s.k)),st=S.stage[S.intro];
+ let step;
+ if(S.paused)step=`<p class="lead">Your introductions are paused.</p><p class="muted">Nobody else can see that you’ve paused. Take the time you need.</p><button class="btn pri" onclick="S.paused=false;render()">Start again</button>`;
+ else if(!ready)step=`<p class="lead">Your next step: the faith and marriage questions.</p><p class="muted">About five minutes for each group. Introductions start once Faith and church, and Marriage itself, are done.</p><button class="btn pri" onclick="go('questions')">Continue the questions</button>`;
+ else if(st==='talking'||st==='meeting')step=`<p class="lead">You’re getting to know ${other().n}.</p><p class="muted">With ${S.companion||'your companion'} and ${other().n}’s companion in the conversation.</p><button class="btn pri" onclick="go('talk')">Open the conversation</button>`;
+ else if(st==='photos')step=`<p class="lead">You and ${other().n} both said yes.</p><button class="btn pri" onclick="go('photos')">See photos</button>`;
+ else if(st==='waitc')step=`<p class="lead">Waiting for the companions to join.</p><button class="btn pri" onclick="go('waitc')">See where things are</button>`;
+ else step=`<p class="lead">This week’s introductions are here.</p><p class="muted">Up to three, every Thursday evening. Never on a Sunday.</p><button class="btn pri" onclick="go('intros')">See this week’s introductions</button>`;
+ return `<div class="scroll">${brand}<h1 class="t" style="margin-top:22px">Hello, ${esc(S.name)}</h1>${step}
+ <div class="card" style="margin-top:18px"><p class="eyebrow">A quiet word</p>${verse('The LORD is good to those who wait for Him, to the soul who seeks Him.','Lamentations 3:25')}</div></div>${tabs('home')}`};
+V.intros=()=>{const busy=['talking','meeting','photos','waitc'].includes(S.stage[S.intro]);
+ return `<div class="scroll"><p class="eyebrow">Thursday evening</p><h1 class="t">This week’s introductions</h1>
+ <p class="muted">No photos yet: first, what you share. Take your time; these stay until next Thursday.</p>
+ ${busy?`<div class="note">You’re getting to know ${other().n}. While that conversation is open, you can keep one introduction waiting, but you can’t start a second conversation.</div>`:''}
+ ${intros().map(p=>{const st=S.stage[p.id];return `<button class="intro" onclick="S.intro='${p.id}';go('intro')"><div class="row between"><h3>${p.n}, ${p.age}</h3>${st==='yes'?'<span class="pill w">You said yes</span>':st==='closed'?'<span class="pill">Closed</span>':st?'<span class="pill w">In conversation</span>':''}</div>
+ <p class="small muted" style="margin:2px 0 8px">${p.town} · ${p.church}</p><p class="small" style="margin:0">You share: ${p.share.slice(0,2).join(' · ')}</p></button>`}).join('')}
+ <button class="link" onclick="go('noneweek')">See what an empty week looks like</button></div>${tabs('intro')}`};
+V.noneweek=()=>`<div class="scroll">${back('intros')}<h1 class="t">No new introductions this week</h1>
+ <p>That isn’t a verdict on you; we introduce people slowly, on purpose.</p>${verse('The LORD is good to those who wait for Him, to the soul who seeks Him.','Lamentations 3:25')}</div>${tabs('intro')}`;
+V.intro=()=>{const p=other(),st=S.stage[p.id];
+ return `<div class="scroll">${back('intros','Introductions')}
+ <p class="eyebrow">Introduction</p><h1 class="t">${p.n}, ${p.age}</h1>
+ <p class="muted">${p.town} · ${p.church}<br>${p.story}</p>
+ <div class="card"><h3>What you share</h3><ul class="list">${p.share.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+ <div class="card"><h3>Things to talk about</h3><ul class="list talk">${p.talk.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+ <div class="card"><h3>In ${p.n}’s words</h3><p style="margin:0">${p.words}</p></div>
+ <details><summary>All of ${p.n}’s answers</summary><p class="small muted">Every Tier 1 answer, group by group, appears here.</p></details>
+ ${st==='closed'?`<div class="note">This introduction has closed.</div>`:st==='yes'?`<div class="card"><p style="margin:0"><b>You said yes.</b> We’ll let you know if ${p.n} would like to know more too. If not, you’ll simply see “This introduction has closed”, and nobody learns who said no.</p></div><button class="link" onclick="S.stage['${p.id}']='photos';go('both')">Show what happens when ${p.n} says yes too</button>`:st?`<button class="btn pri" onclick="go('${st==='photos'?'photos':st==='waitc'?'waitc':'talk'}')">Continue</button>`
+ :`<button class="btn pri" onclick="sayYes('${p.id}')">I’d like to know more</button><button class="btn quiet" onclick="go('closeintro')">Close this introduction</button>
+ <p class="small muted">Your answer is private. A conversation opens only if you both say yes.</p>`}</div>${tabs('intro')}`};
+window.sayYes=id=>{if(!S.season){S.after=id;go('membership');return}S.stage[id]='yes';render()};
+V.both=()=>{const p=other();return `<div class="scroll notabs">
+ <p class="eyebrow" style="margin-top:30px">Good news</p><h1 class="t">You and ${p.n} both said yes</h1>
+ <p>You can now see each other’s photos, at the same moment. Then each of you invites a companion, and the conversation begins.</p>
+ <button class="btn pri" onclick="S.stage['${p.id}']='photos';go('photos')">See photos</button></div>`};
+V.photos=()=>{const p=other();return `<div class="scroll">${back('intro')}
+ <p class="eyebrow">Photos</p><h1 class="t">${p.n}</h1>
+ <div class="photos"><div class="photo">${PERSON}</div><div class="stack"><div class="photo">${PERSON}</div><div class="photo">${PERSON}</div></div></div>
+ <p class="small muted">Up to three photos, no filters. The first is checked against ${p.n}’s ID selfie. Saving or screenshotting photos is against our rules.</p>
+ <p>To start talking, each of you invites a companion: a family member, friend or pastor you trust.</p>
+ <button class="btn pri" onclick="go('invite')">Invite my companion</button>
+ <button class="btn quiet" onclick="go('closeintro')">Close this introduction</button></div>${tabs('intro')}`};
+V.invite=()=>`<div class="scroll notabs">${back('photos')}
+ <p class="eyebrow">Your companion</p><h1 class="t">Who will be your companion?</h1>
+ <p>Someone you trust who will be in every message: a parent, brother or sister, friend, priest or pastor. They help you both stay safe, honest and kind. The decisions stay yours.</p>
+ <label class="f" for="cn">Their first name</label><input id="cn" type="text" value="${esc(S.companion||'Ruth')}" oninput="S.companion=this.value">
+ <label class="f" for="cr">Who they are to you</label><select id="cr"><option>My sister</option><option>My brother</option><option>My mother</option><option>My father</option><option>A friend</option><option>My priest or pastor</option></select>
+ <label class="f" for="cp">Their phone or email</label><input id="cp" type="text" placeholder="We send them an invitation">
+ <details><summary>What your companion sees and can do</summary><ul class="list small"><li>Reads and can write in the conversation</li><li>Can pause the conversation and report anything unsafe</li><li>Can’t say yes or no for you, close the introduction, or message anyone privately</li><li>Passes the same ID check, and is never looking for marriage here</li></ul><p class="small muted">You can change your companion at any time, quietly.</p></details>
+ <button class="btn pri" onclick="S.companion=S.companion||'Ruth';S.stage[S.intro]='waitc';go('waitc')">Send the invitation</button></div>`;
+V.waitc=()=>{const p=other();return `<div class="scroll">${back('intro')}
+ <p class="eyebrow">Almost ready</p><h1 class="t">Waiting for the companions</h1>
+ <div class="card"><ul class="list"><li>${esc(S.companion||'Ruth')} (your companion): invitation sent</li><li>${p.n}’s companion: joined</li></ul></div>
+ <p class="muted">The conversation opens once both companions have joined. There’s no rush.</p>
+ <button class="link" onclick="go('invite')">Send the invitation again, or ask someone else</button>
+ <button class="link" onclick="go('companion')">See the companion’s screens</button>
+ <button class="btn pri" onclick="S.stage['${p.id}']='talking';go('talk')">Show it when they join</button></div>${tabs('intro')}`};
+const firstMsgs=p=>[[p.n,`Hello ${S.name}! Thank you for saying yes. I liked what you wrote about Sunday lunch.`],['me','Hello! Me too. How long have you been at your church?'],[p.n,'About six years. I moved there when I started teaching.'],[S.sex==='w'?'Peter':'Hannah',`Hello both, I’m ${p.n}’s ${S.sex==='w'?'friend':'sister'}. I’ll mostly be reading. Take your time.`]];
+V.talk=()=>{const p=other();if(!S.msgs)S.msgs=firstMsgs(p);const cname=esc(S.companion||'Ruth'),oc=S.sex==='w'?'Peter':'Hannah';
+ return `<div class="scroll">${back('intro',p.n)}
+ <div class="who"><span class="pill w">You</span><span class="pill w">${p.n}</span><span class="pill">${cname}, your companion</span><span class="pill">${oc}, ${p.n}’s companion</span></div>
+ <p class="sys">Everyone here can read every message. Numbers, emails, links and addresses can’t be shared yet.</p>
+ ${S.msgs.map(([w,t])=>w==='me'?`<div class="msg me"><b>You</b>${esc(t)}</div>`:w==='sys'?`<p class="sys">${esc(t)}</p>`:`<div class="msg"><b>${esc(w)}</b>${esc(t)}</div>`).join('')}
+ ${S.stage[p.id]==='meeting'?`<div class="card"><p class="eyebrow">Meeting plan</p><h3>Sunday 14 Dec, after church</h3><p class="small" style="margin:0">Coffee at a café in Leeds city centre · ${cname} will come too</p><details><summary>Meeting safely</summary><ul class="list small"><li>Meet somewhere public, in daylight</li><li>Make your own way there and back</li><li>Tell your companion where you’ll be</li><li>Never share your home address yet</li></ul></details></div>`:''}
+ <div class="compose"><textarea id="mt" aria-label="Message" placeholder="Write a message"></textarea><button class="btn pri" onclick="send()">Send</button></div>
+ <details><summary>Ideas to talk about</summary><ul class="list small">${p.talk.map(x=>`<li>${x}</li>`).join('')}<li>How did faith become your own?</li></ul></details>
+ <button class="btn" onclick="go('meet')">Suggest a first meeting</button>
+ <button class="btn quiet" onclick="go('decide')">Where are we?</button>
+ <div class="row between"><button class="link" onclick="go('closeintro')">Close this introduction</button><button class="link" onclick="sheet('report')">Report</button></div>
+ <button class="link" onclick="sheet('pressure')">I feel pressured, or I’m worried about my safety</button></div>${tabs('intro')}`};
+window.send=()=>{const t=$('#mt').value.trim();if(!t)return;if(/(\+?\d[\d\s]{8,}\d)|@|https?:|www\.|\.(com|co\.uk|org)\b/i.test(t)){S.msgs.push(['sys','That message has a number, email or link in it, so it wasn’t sent. You can share contact details later, when you’re both ready and your companions agree.'])}else S.msgs.push(['me',t]);render();const sc=$('.scroll');sc.scrollTop=sc.scrollHeight};
+V.meet=()=>`<div class="scroll notabs">${back('talk')}
+ <p class="eyebrow">A first meeting</p><h1 class="t">Suggest a first meeting</h1>
+ <label class="f">Where</label><div class="opts">${['A café','After church, at a church hall','A walk in a public park','With family, at a family event'].map((x,i)=>opt(x,i===0,'')).join('')}</div>
+ <label class="f" for="md">When</label><input id="md" type="text" value="Sunday 14 December, after church">
+ <button class="sw on"><span>My companion will come too</span><i aria-hidden="true"></i></button>
+ <p class="small muted">Everyone in the conversation sees the plan. Nobody is ever asked for a home address.</p>
+ <button class="btn pri" onclick="S.stage[S.intro]='meeting';S.msgs.push(['sys','You suggested a first meeting. '+other().n+' agreed.']);go('talk')">Suggest this</button></div>`;
+V.decide=()=>{const p=other();return `<div class="scroll notabs">${back('talk')}
+ <p class="eyebrow">Just for you</p><h1 class="t">Where are you with ${p.n}?</h1>
+ <p class="muted">Private. Nobody sees your answer unless you both choose the same next step.</p>
+ <button class="btn pri" onclick="go('talk')">Continue getting to know ${p.n}</button>
+ <button class="btn" onclick="go('talk')">I need more time</button>
+ <button class="btn quiet" onclick="go('closeintro')">Close this introduction kindly</button>
+ <button class="link" onclick="go('engaged')">We’re engaged</button>
+ ${verse('…Do not arouse or awaken love until the time is right.','Song of Songs 2:7')}</div>`};
+V.closeintro=()=>{const p=other();return `<div class="scroll notabs">${back('intro')}
+ <h1 class="t">Close this introduction?</h1>
+ <p>It’s right to close an introduction when you don’t believe you’re being led towards marriage together. You don’t have to give a reason. We’ll let ${p.n} and the companions know kindly.</p>
+ <label class="f">Add a short message if you’d like (optional)</label>
+ <div class="opts">${opt('Thank you for the time we’ve shared. I don’t believe we’re being led towards marriage, and I wish you every blessing.',S.cm===1,'S.cm=S.cm===1?0:1;render()')}${opt('Thank you for your honesty and kindness. I’m praying God’s best for you.',S.cm===2,'S.cm=S.cm===2?0:2;render()')}</div>
+ ${verse('Because Joseph her husband was a righteous man and was unwilling to disgrace her publicly, he resolved to divorce her quietly.','Matthew 1:19')}
+ <button class="btn pri" onclick="S.stage['${p.id}']='closed';S.msgs=null;go('closed')">Close kindly</button><button class="btn quiet" onclick="go('intro')">Not now</button></div>`};
+V.closed=()=>`<div class="scroll"><h1 class="t" style="margin-top:30px">This introduction has closed</h1>
+ <p>Thank you for closing it kindly. Two people who close an introduction aren’t introduced again unless both later ask.</p>
+ <button class="link" onclick="go('closedother')">See what the other person sees</button>
+ <button class="btn pri" onclick="go('home')">Back to Home</button></div>${tabs('intro')}`;
+V.closedother=()=>{const p=other();return `<div class="scroll">${back('closed')}<h1 class="t">${S.name} has closed this introduction</h1>
+ ${S.cm?`<div class="card"><p style="margin:0">${S.cm===1?'Thank you for the time we’ve shared. I don’t believe we’re being led towards marriage, and I wish you every blessing.':'Thank you for your honesty and kindness. I’m praying God’s best for you.'}</p></div>`:''}
+ <p>It’s all right to feel sad. An introduction closing kindly is part of looking for marriage well. It says nothing about your worth to God.</p>
+ ${verse('…Do not fear, for I have redeemed you; I have called you by your name; you are Mine!','Isaiah 43:1')}
+ <button class="link" onclick="sheet('help')">Finding this hard? Get help ›</button><p class="small muted">(${p.n}’s view. The companions see only: “This introduction has closed. Thank you for your care.”)</p></div>${tabs('intro')}`};
+V.engaged=()=>`<div class="scroll notabs"><p class="eyebrow" style="margin-top:30px">You both said so</p><h1 class="t">We’re so glad</h1>
+ <p>May the Lord bless you both as you prepare for marriage. Your next step is to speak to your priest or pastor about marriage preparation.</p>
+ ${verse('…a cord of three strands is not quickly broken.','Ecclesiastes 4:12')}
+ <p class="muted">Your profiles are now closed to new introductions. Nothing is announced to anyone else.</p>
+ <p class="small muted">When you marry, tell us and we’ll close both accounts and delete your answers and conversations.</p>
+ <button class="btn pri" onclick="go('home')">Back to Home</button></div>`;
+
+V.me=()=>`<div class="scroll"><h1 class="t">Me</h1>
+ <div class="card"><h3>${esc(S.name)}</h3><p class="small muted" style="margin:0">${esc(S.town)} · ${esc(S.church)}</p></div>
+ <button class="sec" onclick="go('questions')"><b>My answers</b><span>›</span></button>
+ <button class="sec" onclick="go('open')"><b>Who I’m open to</b><span>›</span></button>
+ <button class="sec" onclick="go('companionMe')"><b>My companion</b><span>${esc(S.companion||'Not chosen yet')}</span></button>
+ <button class="sec" onclick="go('membership')"><b>My season</b><span>${S.season?'Until 23 May 2027':'Not started'}</span></button>
+ <button class="sec" onclick="go('pause')"><b>Pause introductions</b><span>›</span></button>
+ <button class="sec" onclick="sheet('help')"><b>Get help now</b><span>›</span></button>
+ <button class="sec" onclick="go('leave')"><b>Leave Covenant</b><span>›</span></button>
+ <p class="small muted" style="margin-top:12px">Kingdom First Covenant, from the makers of Kingdom First Life.</p></div>${tabs('me')}`;
+V.companionMe=()=>`<div class="scroll">${back('me','Me')}<h1 class="t">My companion</h1>
+ <p>${S.companion?`${esc(S.companion)} is your companion.`:'You haven’t chosen a companion yet. You’ll invite one when a conversation is about to start.'}</p>
+ <p class="muted">You can change your companion at any time. Nobody is told why.</p>
+ <button class="btn" onclick="go('invite')">${S.companion?'Change my companion':'Choose a companion'}</button>
+ <button class="link" onclick="go('companion')">See what a companion sees</button></div>${tabs('me')}`;
+V.membership=()=>`<div class="scroll">${back(S.after?'intro':'me',S.after?'Back':'Me')}
+ <p class="eyebrow">A season</p><h1 class="t">Six months of introductions</h1>
+ <div class="card"><p class="lead" style="margin:0 0 4px">£59.99 for six months</p><p class="small muted" style="margin:0">Example price. It doesn’t renew by itself; when the season ends, you choose whether to begin another.</p></div>
+ <ul class="list"><li>Free: joining, your ID check, the questions and seeing introductions</li><li>A season lets you say yes and talk, with your companions</li><li>Companions never pay. Nobody can pay to be seen first.</li></ul>
+ ${S.season?`<p class="muted">Your season runs until 23 May 2027.</p>`:`<button class="btn pri" onclick="S.season=true;if(S.after){const a=S.after;S.after=null;S.intro=a;S.stage[a]='yes';go('intro')}else render()">Begin my season</button><button class="link" onclick="S.after=null;go('intros')">Not now</button>`}
+ <p class="small muted">Payment through the App Store or Google Play. Terms · Privacy · Restore purchases</p></div>${tabs('me')}`;
+V.pause=()=>`<div class="scroll">${back('me','Me')}<h1 class="t">Pause introductions</h1>
+ <p>Take a break for as long as you need. Nobody can see that you’ve paused. ${S.stage[S.intro]==='talking'?'Your current conversation stays open unless you close it.':''}</p>
+ <div class="opts">${['Two weeks','A month','Until I start again'].map((x,i)=>opt(x,i===2,'')).join('')}</div>
+ <button class="btn pri" onclick="S.paused=true;go('home')">Pause</button></div>${tabs('me')}`;
+V.leave=()=>`<div class="scroll">${back('me','Me')}<h1 class="t">Thank you for the care you’ve shown here</h1>
+ <p>Leaving without a marriage isn’t failing. Your life with God isn’t on hold, and nothing can separate you from His love.</p>
+ ${verse('…nor anything else in all creation, will be able to separate us from the love of God that is in Christ Jesus our Lord.','Romans 8:39')}
+ <p class="muted">Your profile, answers and conversations will be deleted. (How long reports are kept is for the solicitor to advise.)</p>
+ <button class="btn" onclick="go('pause')">Pause instead</button><button class="btn quiet" onclick="go('home')">Delete my account</button></div>${tabs('me')}`;
+V.companion=()=>{const p=other();return `<div class="scroll notabs">${back('me','Back to the prototype')}
+ <p class="eyebrow">Companion’s view</p><h1 class="t">Thank you for being ${esc(S.name)}’s companion</h1>
+ <p>You’re here as a friend and a witness, to help ${esc(S.name)} and the person they’re getting to know stay safe, honest and kind. The decisions are theirs.</p>
+ <ul class="list"><li>I’ll keep what I read here private. I won’t screenshot or share it.</li><li>I won’t message anyone privately, inside or outside the app.</li><li>I’ll speak up gently if something worries me, and report anything unsafe.</li><li>I won’t push either of them towards marriage or away from it.</li><li>I’m 18 or over, and I’m not looking for marriage here myself.</li></ul>
+ ${verse('…clothe yourselves with hearts of compassion, kindness, humility, gentleness, and patience.','Colossians 3:12')}
+ <button class="btn pri" onclick="go('companionTalk')">I promise</button><button class="btn quiet" onclick="go('me')">Not now</button></div>`};
+V.companionTalk=()=>{const p=other();if(!S.msgs)S.msgs=firstMsgs(p);return `<div class="scroll notabs">${back('companion')}
+ <p class="eyebrow">Companion · ${esc(S.name)} and ${p.n}</p>
+ <p class="small muted">One screen only: the conversation. You can write, pause it or report. You can’t close the introduction or message anyone privately.</p>
+ ${S.msgs.slice(-4).map(([w,t])=>w==='me'?`<div class="msg"><b>${esc(S.name)}</b>${esc(t)}</div>`:w==='sys'?`<p class="sys">${esc(t)}</p>`:`<div class="msg"><b>${esc(w)}</b>${esc(t)}</div>`).join('')}
+ <div class="compose"><textarea aria-label="Message" placeholder="Write a message"></textarea><button class="btn pri">Send</button></div>
+ <div class="row between"><button class="link">Pause the conversation</button><button class="link" onclick="sheet('report')">Report</button></div></div>`};
+
+/* ---------- sheets ---------- */
+const SH={};
+SH.help=()=>`<h2 class="t" style="margin-top:0">Get help now</h2><div class="help small"><dl>
+ <dt>In danger now? Call 999.</dt><dd>If you can’t speak, call 999 and press 55 when asked (mobile).</dd>
+ <dt>Domestic abuse</dt><dd>England 0808 2000 247 (24 hours) · Wales, Live Fear Free 0808 80 10 800 · Scotland 0800 027 1234 · Northern Ireland 0808 802 1414 · Men’s Advice Line 0808 8010 327</dd>
+ <dt>Forced marriage or honour-based abuse</dt><dd>Forced Marriage Unit 020 7008 0151 · Karma Nirvana 0800 5999 247</dd>
+ <dt>Fraud or a scam</dt><dd>Report Fraud 0300 123 2040 (England, Wales, Northern Ireland); in Scotland, Police Scotland on 101</dd>
+ <dt>Struggling to cope</dt><dd>Samaritans, free, any time: 116 123</dd>
+ <dt>Abuse in a church setting</dt><dd>Thirtyone:eight 0303 003 1111, or your church’s safeguarding lead</dd></dl>
+ <p class="muted" style="margin-top:10px">Numbers checked by the pastoral reviewer on 23 Nov 2026; some still to verify before launch.</p></div>
+ <button class="btn" onclick="sheet('pressure')">Talk to us privately</button><button class="btn quiet" onclick="sheet(null)">Close</button>`;
+SH.pressure=()=>`<h2 class="t" style="margin-top:0">Talk to us privately</h2>
+ <p>Nobody in your conversation, including the companions, can see this. We usually reply the same day, but we can’t respond in an emergency. If someone is in danger now, call 999.</p>
+ <div class="opts">${['I feel pressured to go faster or to marry','Someone has asked me for money','I’m worried about my safety','Something else'].map((x,i)=>opt(x,i===0,'',1)).join('')}</div>
+ <textarea aria-label="Tell us more (optional)" placeholder="Tell us more, if you’d like"></textarea>
+ <button class="btn pri" onclick="sheet('sent')">Send to the Covenant team</button><button class="btn quiet" onclick="sheet(null)">Not now</button>`;
+SH.report=()=>`<h2 class="t" style="margin-top:0">Report</h2><p class="muted">Tell us what happened. The person isn’t told who reported them.</p>
+ <div class="opts">${['Asking for money','Pressure or control','Rude or sexual messages','Not who they say they are','Something else'].map((x,i)=>opt(x,false,'',1)).join('')}</div>
+ <button class="btn pri" onclick="sheet('sent')">Send report</button><button class="btn quiet" onclick="sheet(null)">Cancel</button>`;
+SH.sent=()=>`<h2 class="t" style="margin-top:0">Thank you for telling us</h2><p>A member of the Covenant team will look at this today. You can close the introduction at any time, without a reason.</p><button class="btn pri" onclick="sheet(null)">Done</button>`;
+window.sheet=k=>{S.sheet=k;render()};
+
+/* ---------- render ---------- */
+const NAV=[['Joining',[['welcome','Welcome'],['yes','My yes'],['signin','Account'],['whycheck','Why we check ID'],['checked','You’re checked'],['basics','About you'],['faith','The faith we share'],['church','Your church'],['story','Your story so far'],['separated','Separated, not divorced'],['open','Who you’re open to']]],
+ ['Tier 1',[['questions','Questions home'],['q','A question']]],
+ ['Introductions',[['home','Home'],['intros','This week'],['noneweek','An empty week'],['intro','An introduction'],['membership','A season (price)'],['both','You both said yes'],['photos','Tier 2: photos'],['invite','Invite a companion'],['waitc','Waiting for companions'],['talk','The conversation'],['meet','Suggest a meeting'],['decide','Where are we?'],['closeintro','Close kindly'],['closedother','When someone closes'],['engaged','Engaged']]],
+ ['Companion',[['companion','The companion’s promise'],['companionTalk','The companion’s screen']]],
+ ['Me',[['me','Me'],['pause','Pause'],['leave','Leave'],['help','Get help now (sheet)']]]];
+function markJump(){document.querySelectorAll('.side button.jump').forEach(b=>b.classList.toggle('on',b.dataset.s===S.screen))}
+function buildSide(){$('#jumps').innerHTML=NAV.map(([g,L])=>`<h2>${g}</h2>${L.map(([s,l])=>`<button class="jump" data-s="${s}">${l}</button>`).join('')}`).join('');
+ document.querySelectorAll('.side button.jump').forEach(b=>b.onclick=()=>{const s=b.dataset.s;document.querySelector('.side').classList.remove('open');
+  if(s==='help'){go('me');sheet('help');return}
+  if(['photos','invite','waitc','talk','meet','decide','both','companionTalk'].includes(s)){S.intro=S.intro||'a';S.season=true;SECS.forEach(x=>x.need&&S.secDone.add(x.k));if(!S.stage[S.intro]||S.stage[S.intro]==='closed')S.stage[S.intro]='talking';S.companion=S.companion||'Ruth'}
+  if(['home','intros','intro'].includes(s))SECS.forEach(x=>x.need&&S.secDone.add(x.k));
+  if(s==='intro'||s==='closeintro'||s==='closedother')S.intro=S.intro||'a';
+  if(s==='q'){S.sec='B';S.qi=0}
+  go(s)});
+ document.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{const t=b.dataset.th;if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',t);document.querySelectorAll('[data-th]').forEach(x=>x.classList.toggle('on',x===b))});
+ document.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sex=b.dataset.sx;S.name=S.sex==='w'?'Sarah':'David';S.msgs=null;document.querySelectorAll('[data-sx]').forEach(x=>x.classList.toggle('on',x===b));render()});
+ document.querySelector('[data-th="auto"]').classList.add('on');document.querySelector('[data-sx="w"]').classList.add('on')}
+function render(){const el=$('#screen');el.innerHTML=`<span class="proto">Prototype · sample people</span>`+(V[S.screen]||V.welcome)()+(S.sheet?`<div class="sheet" onclick="if(event.target===this)sheet(null)"><div class="in" role="dialog" aria-modal="true">${SH[S.sheet]()}</div></div>`:'')}
+buildSide();render();markJump();
+</script>

@@ -1,0 +1,116 @@
+import React from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { fonts, radius, space, TAP, usePalette } from '@/theme';
+
+export function Screen({ children }: { children: React.ReactNode }) {
+  const p = usePalette();
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: p.bg }} edges={['top', 'bottom', 'left', 'right']}>
+      <ScrollView contentContainerStyle={{ padding: space.xl, paddingBottom: space.xxl }}>{children}</ScrollView>
+    </SafeAreaView>
+  );
+}
+
+export function Brand() {
+  const p = usePalette();
+  return (
+    <View accessibilityRole="header" accessibilityLabel="Kingdom First Covenant">
+      <Text style={{ fontFamily: fonts.display, fontSize: 15, letterSpacing: 2.1, color: p.ink }}>KINGDOM FIRST</Text>
+      <Text style={{ fontFamily: fonts.displayItalic, fontSize: 22, color: p.accent }}>Covenant</Text>
+    </View>
+  );
+}
+
+export function Eyebrow({ children }: { children: React.ReactNode }) {
+  const p = usePalette();
+  return <Text style={{ fontFamily: fonts.bodySemi, fontSize: 12, letterSpacing: 1.9, textTransform: 'uppercase', color: p.muted, marginBottom: space.xs }}>{children}</Text>;
+}
+
+export function Title({ children, style }: { children: React.ReactNode; style?: TextStyle }) {
+  const p = usePalette();
+  return <Text accessibilityRole="header" style={[{ fontFamily: fonts.display, fontSize: 32, lineHeight: 36, color: p.ink, marginTop: space.s, marginBottom: space.m }, style]}>{children}</Text>;
+}
+
+export function Body({ children, muted, small }: { children: React.ReactNode; muted?: boolean; small?: boolean }) {
+  const p = usePalette();
+  return <Text style={{ fontFamily: fonts.body, fontSize: small ? 14 : 16, lineHeight: small ? 21 : 25, color: muted ? p.muted : p.ink, marginBottom: space.m }}>{children}</Text>;
+}
+
+export function Verse({ text, reference }: { text: string; reference: string }) {
+  const p = usePalette();
+  return (
+    <View style={{ marginTop: space.m, marginBottom: space.s }}>
+      <Text style={{ fontFamily: fonts.displayItalic, fontSize: 19, lineHeight: 26, color: p.ink }}>“{text}”</Text>
+      <Text style={{ fontFamily: fonts.bodySemi, fontSize: 12, letterSpacing: 1.7, textTransform: 'uppercase', color: p.muted, marginTop: space.xs }}>{reference}</Text>
+    </View>
+  );
+}
+
+export function Card({ children }: { children: React.ReactNode }) {
+  const p = usePalette();
+  return <View style={{ backgroundColor: p.surface, borderColor: p.line, borderWidth: 1, borderRadius: radius.card, padding: space.l, marginBottom: space.m }}>{children}</View>;
+}
+
+export function Prayer({ children }: { children: React.ReactNode }) {
+  const p = usePalette();
+  return (
+    <View style={{ backgroundColor: p.pray, borderRadius: radius.card, padding: space.l, marginVertical: space.m }}>
+      <Text style={{ fontFamily: fonts.displayItalic, fontSize: 18, lineHeight: 25, color: p.prayInk }}>{children}</Text>
+    </View>
+  );
+}
+
+export function Bullets({ items }: { items: string[] }) {
+  const p = usePalette();
+  return (
+    <View>
+      {items.map((t) => (
+        <View key={t} style={{ flexDirection: 'row', marginBottom: space.xs }}>
+          <Text style={{ fontFamily: fonts.body, fontSize: 16, lineHeight: 25, color: p.ink, width: 18 }}>•</Text>
+          <Text style={{ fontFamily: fonts.body, fontSize: 16, lineHeight: 25, color: p.ink, flex: 1 }}>{t}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+type BtnKind = 'primary' | 'secondary' | 'quiet';
+export function Button({ label, onPress, kind = 'secondary' }: { label: string; onPress: () => void; kind?: BtnKind }) {
+  const p = usePalette();
+  const primary = kind === 'primary';
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      style={({ pressed }) => [
+        s.btn,
+        { borderColor: kind === 'quiet' ? p.line : p.accent, backgroundColor: primary ? p.accent : p.surface, opacity: pressed ? 0.85 : 1 }
+      ]}
+    >
+      <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: primary ? p.onAccent : p.ink, textAlign: 'center' }}>{label}</Text>
+    </Pressable>
+  );
+}
+
+export function TextLink({ label, onPress }: { label: string; onPress: () => void }) {
+  const p = usePalette();
+  return (
+    <Pressable accessibilityRole="link" onPress={onPress} style={{ minHeight: TAP, justifyContent: 'center' }}>
+      <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: p.accent, textDecorationLine: 'underline' }}>{label}</Text>
+    </Pressable>
+  );
+}
+
+export function Back({ onPress, label = 'Back' }: { onPress: () => void; label?: string }) {
+  const p = usePalette();
+  return (
+    <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onPress} style={{ minHeight: TAP, justifyContent: 'center', alignSelf: 'flex-start' }}>
+      <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: p.accent }}>‹ {label}</Text>
+    </Pressable>
+  );
+}
+
+const s = StyleSheet.create({
+  btn: { minHeight: 52, borderRadius: radius.button, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center', paddingHorizontal: space.l, paddingVertical: space.m, marginVertical: space.s }
+});

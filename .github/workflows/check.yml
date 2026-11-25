@@ -1,0 +1,58 @@
+name: Covenant app check
+
+# Kingdom First Covenant app (repo root). Linux only, manual start, never macOS (build plan, 24 Nov 2026).
+# install: resolves Expo SDK 58-compatible versions (npx expo install) and commits package.json and the lock file.
+# Always: type-check and export the web preview, uploaded as an artifact for screenshots.
+on:
+  workflow_dispatch:
+    inputs:
+      install:
+        description: "Resolve and commit dependency versions"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: |
+          if [ "${{ inputs.install }}" = "true" ] || [ ! -f package-lock.json ]; then
+            npm install
+            npx expo install expo-router react-native react react-dom react-native-web react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar expo-font expo-secure-store @expo-google-fonts/cormorant-garamond @expo-google-fonts/ibm-plex-sans @supabase/supabase-js react-native-url-polyfill @types/react
+          else
+            npm ci
+          fi
+      - name: Web preview
+        run: npx expo export --platform web --output-dir dist
+      - name: Type-check
+        run: npx tsc --noEmit
+      - uses: actions/upload-artifact@v4
+        with:
+          name: covenant-web
+          path: dist
+          retention-days: 7
+      - name: Commit versions
+        if: ${{ inputs.install }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git diff --cached --quiet || git commit -m "Covenant app: dependency versions for Expo SDK 58 (CI)"
+          git pull --rebase -q && git push -q
+      - name: Publish preview to the covenant-preview branch (for Claude's phone-size screenshots)
+        working-directory: dist
+        run: |
+          git init -q && git checkout -q -b covenant-preview
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -qm "Covenant web preview ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" covenant-preview
