@@ -1,6 +1,6 @@
 -- Kingdom First Covenant: base tables.
 -- PROJECT: kingdom-first-covenant (ref afiyphuubmefjaofbmbx). NEVER run against Kingdom First Life's project.
--- Written 25 Nov 2026, NOT applied. Applied only with the owner present (covenant/supabase-link.md).
+-- Applied 25 Nov 2026 23:49 with the owner present (migration cov_base). Advisor notes accepted: audit_log has no policies on purpose (no member reads it); save_profile is the intended write path.
 -- Row level security on everywhere; no open write policies; writes go through security-definer functions.
 
 -- Switches (sign-ups stay off until the solicitor, DPIA, safeguarding advisers and pastoral reviewer sign off).
@@ -29,7 +29,7 @@ create table public.profiles (
   created_at timestamptz not null default now()
 );
 alter table public.profiles enable row level security;
-create policy profiles_own_read on public.profiles for select to authenticated using (id = auth.uid());
+create policy profiles_own_read on public.profiles for select to authenticated using (id = (select auth.uid()));
 
 -- Dated consent, one row per special category (religion, marital history), per UK GDPR Article 9.
 create table public.consents (
@@ -41,7 +41,7 @@ create table public.consents (
   primary key (user_id, kind, given_at)
 );
 alter table public.consents enable row level security;
-create policy consents_own_read on public.consents for select to authenticated using (user_id = auth.uid());
+create policy consents_own_read on public.consents for select to authenticated using (user_id = (select auth.uid()));
 
 -- Audit trail of sensitive actions (moderators and functions write; members never read).
 create table public.audit_log (
@@ -70,3 +70,4 @@ begin
 end $$;
 revoke all on function public.save_profile(text, text, text) from public, anon;
 grant execute on function public.save_profile(text, text, text) to authenticated;
+revoke insert, update, delete, truncate on public.app_flags, public.profiles, public.consents from anon, authenticated;
