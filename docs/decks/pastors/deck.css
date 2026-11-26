@@ -1,4 +1,4 @@
-:root{--ink:#2A1840;--muted:#645A73;--line:#E4DDEB;--cream:#F3F0EA;--paper:#FBF9FC;--purple:#3F2163;--navy:#19203A;--navy2:#222A47;--light:#F3EEE4;--lilac:#C9B2F2;--tint:#ECE7DF;--display:'Cormorant Garamond',Georgia,serif;--body:'IBM Plex Sans',Arial,sans-serif}
+:root{--ink:#2A1840;--muted:#645A73;--line:#E4DDEB;--cream:#F3F0EA;--paper:#FBF9FC;--purple:#7B2D3B;--navy:#19203A;--navy2:#222A47;--light:#F3EEE4;--lilac:#E4A6A0;--tint:#ECE7DF;--display:'Cormorant Garamond',Georgia,serif;--body:'IBM Plex Sans',Arial,sans-serif}
 body{font-family:var(--body);color:var(--ink)}
 section{counter-increment:page;padding:128px 128px 160px;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;gap:40px;box-sizing:border-box}
 section.cream{background:var(--cream)}
@@ -42,3 +42,9 @@ table{font-size:28px;color:var(--ink);width:100%}
 .cards.three{grid-template-columns:repeat(3,1fr);flex:0 0 auto}
 .statement .list li{color:#E6E0F0;font-size:32px}
 .cando li{color:var(--ink)}
+.wm{display:flex;flex-direction:column;gap:4px}
+.wm .icon{width:120px;height:120px;border-radius:26px;margin-bottom:28px;box-shadow:0 0 0 2px #3A4466}
+.wm1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:10px;color:var(--light);margin:0}
+.wm .wm2{font-family:var(--display);font-style:italic;font-weight:600;font-size:132px;line-height:1;color:#E4A6A0;margin:0}
+.rule{width:120px;height:6px;background:#CBAA6A;border-radius:3px}
+.statement .eyebrow{color:var(--light)}
