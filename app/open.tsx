@@ -12,11 +12,12 @@ const TRADS = ['Catholic', 'Orthodox', 'Anglican', 'Protestant and free churches
 const TEACH: Record<string, string> = {
   Catholic: 'The Catholic Church teaches that a valid marriage lasts for life, so a civil divorce on its own doesn’t free someone to marry again in church. A declaration of nullity (often called an annulment) is the Church’s finding, after careful inquiry, that a true marriage bond never existed. It isn’t a “Catholic divorce”, and it doesn’t make children of that marriage illegitimate. This applies to anyone a Catholic marries, whether or not they’re Catholic. A widowed person is free to marry. If you’re unsure, your parish priest can help.',
   Orthodox: 'The Orthodox Church holds that marriage is for life, and it grieves when a marriage breaks down. Out of care for its people (this is called economia), a bishop may give a church divorce and allow a second, or even a third, marriage, usually with a quieter service of repentance and hope. Each diocese has its own process, so your priest will guide you.',
-  Anglican: 'The Church of England teaches that marriage is for life. Since 2002 it has accepted that, in exceptional circumstances, a divorced person may marry in church while a former husband or wife is still living. The decision rests with the priest, who may also say no.',
+  Oriental: 'Your church has its own teaching on marriage after divorce, and some of it is stricter than in other churches. Please ask your priest before you choose.',
+  Anglican: 'The Church of England teaches that marriage is for life. Since 2002 it has accepted that, in exceptional circumstances, a divorced person may marry in church while a former husband or wife is still living. The decision rests with the priest, who may also say no. A service of prayer and dedication after a civil wedding is another way. The Church in Wales, the Scottish Episcopal Church and other Anglican churches have their own guidance.',
   Protestant: 'Churches differ. Many allow remarriage after divorce, some only where there was adultery or desertion, and a few not while a former husband or wife is living. Your church’s leaders can tell you how they see it.'
 };
 const family = (c: string | null) =>
-  !c ? 'Protestant' : /Orthodox|Armenian/.test(c) ? 'Orthodox' : /Catholic/.test(c) ? 'Catholic' : /England|Wales|Scottish|Ireland/.test(c) ? 'Anglican' : 'Protestant';
+  !c ? 'Protestant' : /Coptic|Ethiopian|Armenian|Syriac/.test(c) ? 'Oriental' : /Orthodox/.test(c) ? 'Orthodox' : /Catholic/.test(c) ? 'Catholic' : /England|Wales|Scottish|Ireland/.test(c) ? 'Anglican' : 'Protestant';
 
 export default function Open() {
   const { a, set } = useAnswers();
