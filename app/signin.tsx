@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { TextInput } from 'react-native';
 import { router } from 'expo-router';
-import { Back, Body, Button, Card, Screen, Title } from '@/components/ui';
+import { Back, Body, Button, Card, Screen, TextLink, Title } from '@/components/ui';
+import { TEST_BUILD } from '@/lib/onboarding';
 import { fonts, radius, space, usePalette } from '@/theme';
 
 // Create account / Sign in (build plan step 3: email code plus App review sign-in).
@@ -34,6 +35,7 @@ export default function SignIn() {
           <Body small muted>Joining opens later, in the UK first.</Body>
         </Card>
       )}
+      {TEST_BUILD && <TextLink label="Try the test version, with made-up answers ›" onPress={() => router.push('/whycheck')} />}
     </Screen>
   );
 }

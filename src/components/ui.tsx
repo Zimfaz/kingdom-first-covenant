@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View, type TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fonts, radius, space, TAP, usePalette } from '@/theme';
 
@@ -114,3 +114,57 @@ export function Back({ onPress, label = 'Back' }: { onPress: () => void; label?:
 const s = StyleSheet.create({
   btn: { minHeight: 52, borderRadius: radius.button, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center', paddingHorizontal: space.l, paddingVertical: space.m, marginVertical: space.s }
 });
+
+/** A choice row: radio (one) or tick box (many). 52px tall at least, the whole row is the target. */
+export function Opt({ label, on, onPress, multi }: { label: string; on: boolean; onPress: () => void; multi?: boolean }) {
+  const p = usePalette();
+  return (
+    <Pressable
+      accessibilityRole={multi ? 'checkbox' : 'radio'}
+      accessibilityState={multi ? { checked: on } : { selected: on }}
+      onPress={onPress}
+      style={{ minHeight: 52, flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: on ? p.accent : p.line, backgroundColor: on ? p.tint : p.surface, borderRadius: radius.button, paddingHorizontal: space.l, paddingVertical: space.m, marginBottom: space.s }}
+    >
+      <View style={{ width: 20, height: 20, borderRadius: multi ? 5 : 10, borderWidth: 2, borderColor: on ? p.accent : p.muted, backgroundColor: on ? p.accent : 'transparent', marginRight: space.m, alignItems: 'center', justifyContent: 'center' }}>
+        {on && <Text style={{ color: p.onAccent, fontSize: 12, fontFamily: fonts.bodySemi, lineHeight: 14 }}>{multi ? '✓' : ''}</Text>}
+      </View>
+      <Text style={{ flex: 1, fontFamily: fonts.body, fontSize: 16, lineHeight: 22, color: p.ink }}>{label}</Text>
+    </Pressable>
+  );
+}
+
+export function Field({ label, value, onChangeText, placeholder, hint }: { label: string; value: string; onChangeText: (t: string) => void; placeholder?: string; hint?: string }) {
+  const p = usePalette();
+  return (
+    <View style={{ marginBottom: space.m }}>
+      <Text style={{ fontFamily: fonts.bodySemi, fontSize: 15, color: p.ink, marginBottom: space.xs }}>{label}</Text>
+      <TextInput
+        accessibilityLabel={label}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor={p.muted}
+        style={{ fontFamily: fonts.body, fontSize: 16, color: p.ink, backgroundColor: p.surface, borderColor: p.line, borderWidth: 1.5, borderRadius: radius.button, minHeight: 52, paddingHorizontal: space.l }}
+      />
+      {hint ? <Text style={{ fontFamily: fonts.body, fontSize: 14, lineHeight: 20, color: p.muted, marginTop: space.xs }}>{hint}</Text> : null}
+    </View>
+  );
+}
+
+export function Label({ children }: { children: React.ReactNode }) {
+  const p = usePalette();
+  return <Text accessibilityRole="header" style={{ fontFamily: fonts.bodySemi, fontSize: 15, color: p.ink, marginTop: space.m, marginBottom: space.s }}>{children}</Text>;
+}
+
+export function Fold({ title, children }: { title: string; children: React.ReactNode }) {
+  const p = usePalette();
+  const [open, setOpen] = React.useState(false);
+  return (
+    <View style={{ marginVertical: space.s }}>
+      <Pressable accessibilityRole="button" accessibilityState={{ expanded: open }} onPress={() => setOpen(!open)} style={{ minHeight: TAP, justifyContent: 'center' }}>
+        <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: p.accent }}>{open ? '▾' : '▸'} {title}</Text>
+      </Pressable>
+      {open && <View style={{ paddingLeft: space.l }}>{children}</View>}
+    </View>
+  );
+}
