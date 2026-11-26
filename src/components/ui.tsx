@@ -1,26 +1,43 @@
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View, type TextStyle } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { router, usePathname } from 'expo-router';
+import { TEST_BUILD } from '@/lib/onboarding';
 import { fonts, radius, space, TAP, usePalette } from '@/theme';
 
 export type Tab = 'home' | 'intros' | 'me';
 const TABS: [Tab, string, string][] = [['home', 'Home', '/home'], ['intros', 'Introductions', '/intros'], ['me', 'Me', '/me']];
 
-/** A page. With `tab`, the tab bar sits at the bottom, above the home bar (safe area). */
-export function Screen({ children, tab }: { children: React.ReactNode; tab?: Tab }) {
+/** A page. With `tab`, a header with a labelled Help button sits at the top and the tab bar at the bottom,
+ * padded above the home bar. In the test version a strip on every screen says to use made-up answers. */
+export function Screen({ children, tab, help }: { children: React.ReactNode; tab?: Tab; help?: boolean }) {
   const p = usePalette();
+  const insets = useSafeAreaInsets();
+  const path = usePathname();
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: p.bg }} edges={['top', 'bottom', 'left', 'right']}>
-      <ScrollView contentContainerStyle={{ padding: space.xl, paddingBottom: space.xxl }}>{children}</ScrollView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: p.bg }} edges={tab ? ['top', 'left', 'right'] : ['top', 'bottom', 'left', 'right']}>
+      {TEST_BUILD && (
+        <View style={{ backgroundColor: p.tint, paddingVertical: 6, paddingHorizontal: space.xl }}>
+          <Text style={{ fontFamily: fonts.bodySemi, fontSize: 13, color: p.ink, textAlign: 'center' }}>Test version · use made-up answers · nothing is saved</Text>
+        </View>
+      )}
+      {(tab || help) && (
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: space.l, paddingTop: space.xs }}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Get help now" onPress={() => router.push('/help')}
+            style={{ minHeight: TAP, minWidth: TAP, paddingHorizontal: space.m, justifyContent: 'center', borderRadius: radius.pill, borderWidth: 1.5, borderColor: p.line }}>
+            <Text style={{ fontFamily: fonts.bodySemi, fontSize: 15, color: p.ink }}>Help</Text>
+          </Pressable>
+        </View>
+      )}
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ padding: space.xl, paddingTop: tab || help ? space.s : space.xl, paddingBottom: space.xxl }}>{children}</ScrollView>
       {tab && (
-        <View accessibilityRole="tablist" style={{ flexDirection: 'row', borderTopWidth: 1, borderTopColor: p.line, backgroundColor: p.surface }}>
+        <View accessibilityRole="tablist" style={{ flexDirection: 'row', borderTopWidth: 1, borderTopColor: p.line, backgroundColor: p.surface, paddingBottom: insets.bottom }}>
           {TABS.map(([k, label, href]) => {
             const on = k === tab;
             return (
-              <Pressable key={k} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => !on && router.replace(href as never)}
+              <Pressable key={k} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => path !== href && router.replace(href as never)}
                 style={{ flex: 1, minHeight: 56, alignItems: 'center', justifyContent: 'center', paddingHorizontal: space.xs }}>
-                <Text style={{ fontFamily: on ? fonts.bodySemi : fonts.body, fontSize: 14, color: on ? p.accent : p.muted, textAlign: 'center' }}>{label}</Text>
+                <Text maxFontSizeMultiplier={1.6} style={{ fontFamily: on ? fonts.bodySemi : fonts.body, fontSize: 14, color: on ? p.accent : p.muted, textAlign: 'center' }}>{label}</Text>
                 <View style={{ height: 3, width: 28, borderRadius: 2, marginTop: 4, backgroundColor: on ? p.accent : 'transparent' }} />
               </Pressable>
             );
@@ -47,14 +64,14 @@ export function Row({ title, note, onPress }: { title: string; note?: string; on
 }
 
 /** An on/off row, e.g. "This matters a lot to me". */
-export function Toggle({ label, on, onPress }: { label: string; on: boolean; onPress: () => void }) {
+export function Toggle({ label, on, onPress, disabled }: { label: string; on: boolean; onPress: () => void; disabled?: boolean }) {
   const p = usePalette();
   return (
-    <Pressable accessibilityRole="switch" accessibilityState={{ checked: on }} onPress={onPress}
-      style={{ minHeight: 52, flexDirection: 'row', alignItems: 'center', paddingVertical: space.s, marginVertical: space.s }}>
+    <Pressable accessibilityRole="switch" accessibilityState={{ checked: on, disabled }} onPress={() => !disabled && onPress()}
+      style={{ minHeight: 52, flexDirection: 'row', alignItems: 'center', paddingVertical: space.s, marginVertical: space.s, opacity: disabled ? 0.45 : 1 }}>
       <Text style={{ flex: 1, fontFamily: fonts.bodySemi, fontSize: 16, lineHeight: 22, color: p.ink }}>{label}</Text>
-      <View style={{ width: 48, height: 28, borderRadius: 14, padding: 3, backgroundColor: on ? p.accent : p.line, alignItems: on ? 'flex-end' : 'flex-start' }}>
-        <View style={{ width: 22, height: 22, borderRadius: 11, backgroundColor: p.surface }} />
+      <View style={{ width: 50, height: 30, borderRadius: 15, padding: 2, borderWidth: 2, borderColor: on ? p.accent : p.muted, backgroundColor: on ? p.accent : p.surface, alignItems: on ? 'flex-end' : 'flex-start' }}>
+        <View style={{ width: 22, height: 22, borderRadius: 11, backgroundColor: on ? p.surface : p.muted }} />
       </View>
     </Pressable>
   );
@@ -123,20 +140,23 @@ export function Bullets({ items }: { items: string[] }) {
   );
 }
 
-type BtnKind = 'primary' | 'secondary' | 'quiet';
-export function Button({ label, onPress, kind = 'secondary' }: { label: string; onPress: () => void; kind?: BtnKind }) {
+type BtnKind = 'primary' | 'secondary' | 'quiet' | 'danger';
+/** Buttons. `disabled` looks disabled and does nothing; `danger` is the calm delete style (outlined, never filled). */
+export function Button({ label, onPress, kind = 'secondary', disabled }: { label: string; onPress: () => void; kind?: BtnKind; disabled?: boolean }) {
   const p = usePalette();
-  const primary = kind === 'primary';
+  const primary = kind === 'primary' && !disabled;
+  const border = disabled ? p.line : kind === 'quiet' ? p.line : kind === 'danger' ? p.ink : p.accent;
   return (
     <Pressable
       accessibilityRole="button"
-      onPress={onPress}
+      accessibilityState={{ disabled }}
+      onPress={() => !disabled && onPress()}
       style={({ pressed }) => [
         s.btn,
-        { borderColor: kind === 'quiet' ? p.line : p.accent, backgroundColor: primary ? p.accent : p.surface, opacity: pressed ? 0.85 : 1 }
+        { borderColor: border, borderStyle: kind === 'danger' ? 'dashed' : 'solid', backgroundColor: primary ? p.accent : p.surface, opacity: pressed && !disabled ? 0.85 : 1 }
       ]}
     >
-      <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: primary ? p.onAccent : p.ink, textAlign: 'center' }}>{label}</Text>
+      <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: primary ? p.onAccent : disabled ? p.muted : p.ink, textAlign: 'center' }}>{label}</Text>
     </Pressable>
   );
 }

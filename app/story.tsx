@@ -30,8 +30,9 @@ export default function StoryScreen() {
         </>
       )}
       <Body small muted>Why we ask: churches have different teaching about marriage after divorce. Telling the truth here means you’re only introduced to people who can marry you with a clear conscience, in a church that can bless it.</Body>
-      <TextLink label="I’m separated but not yet divorced" onPress={() => router.push('/separated')} />
-      <Button kind="primary" label="Next" onPress={() => router.push('/open')} />
+      <Opt label="I’m separated but not yet divorced" on={false} onPress={() => router.push('/separated')} />
+      {!a.story && <Body small muted>Choose one to continue.</Body>}
+      <Button kind="primary" label={a.setupDone ? 'Save' : 'Next'} disabled={!a.story} onPress={() => (a.setupDone ? router.back() : router.push('/open'))} />
     </Screen>
   );
 }

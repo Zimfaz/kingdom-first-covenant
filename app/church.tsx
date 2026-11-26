@@ -27,7 +27,8 @@ export default function Church() {
         </React.Fragment>
       ))}
       <Field label="Your parish or church (optional)" value={a.parish} onChangeText={(t) => set({ parish: t })} placeholder="e.g. St Anne’s, Leeds" hint="Only shown once you’re talking with someone." />
-      <Button kind="primary" label="Next" onPress={() => router.push('/story')} />
+      {!a.church && <Body small muted>Choose one to continue.</Body>}
+      <Button kind="primary" label={a.setupDone ? 'Save' : 'Next'} disabled={!a.church} onPress={() => (a.setupDone ? router.back() : router.push('/story'))} />
     </Screen>
   );
 }

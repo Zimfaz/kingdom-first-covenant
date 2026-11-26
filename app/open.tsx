@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { Back, Body, Button, Eyebrow, Fold, Label, Opt, Screen, Title } from '@/components/ui';
-import { toggle, useAnswers, type Story } from '@/lib/onboarding';
+import { resetTo, toggle, useAnswers, type Story } from '@/lib/onboarding';
 
 // Who you're open to (prototype V.open). Teaching summaries are draft until the pastoral reviewer and
 // a reader from each tradition check them.
@@ -8,7 +8,7 @@ const OPEN: [Story, string][] = [
   ['never', 'Never married'], ['widowed', 'Widowed'], ['nullity', 'Divorced, with a declaration of nullity'],
   ['permission', 'Divorced, with church permission to marry again'], ['divorced', 'Divorced'], ['process', 'Declaration of nullity or permission in process']
 ];
-const TRADS = ['Catholic', 'Orthodox', 'Anglican', 'Protestant and free churches'];
+const TRADS = ['Catholic', 'Eastern Orthodox', 'Oriental Orthodox (Coptic, Ethiopian, Eritrean, Armenian, Syriac)', 'Anglican', 'Protestant and free churches'];
 const TEACH: Record<string, string> = {
   Catholic: 'The Catholic Church teaches that a valid marriage lasts for life, so a civil divorce on its own doesn’t free someone to marry again in church. A declaration of nullity (often called an annulment) is the Church’s finding, after careful inquiry, that a true marriage bond never existed. It isn’t a “Catholic divorce”, and it doesn’t make children of that marriage illegitimate. This applies to anyone a Catholic marries, whether or not they’re Catholic. A widowed person is free to marry. If you’re unsure, your parish priest can help.',
   Orthodox: 'The Orthodox Church holds that marriage is for life, and it grieves when a marriage breaks down. Out of care for its people (this is called economia), a bishop may give a church divorce and allow a second, or even a third, marriage, usually with a quieter service of repentance and hope. Each diocese has its own process, so your priest will guide you.',
@@ -21,7 +21,7 @@ const family = (c: string | null) =>
 
 export default function Open() {
   const { a, set } = useAnswers();
-  const ready = a.openHist.length > 0;
+  const ready = a.openHist.length > 0 && a.openTrad.length > 0;
   return (
     <Screen>
       <Back onPress={() => router.back()} />
@@ -33,10 +33,10 @@ export default function Open() {
         <Body small>{TEACH[family(a.church)]}</Body>
         <Body small muted>Your church’s teaching and your priest’s or pastor’s guidance come first. This is only a short summary.</Body>
       </Fold>
-      <Label>Church families</Label>
+      <Label>Which church families could you marry into?</Label>
       {TRADS.map((k) => <Opt key={k} multi label={k} on={a.openTrad.includes(k)} onPress={() => set({ openTrad: toggle(a.openTrad, k) })} />)}
-      {!ready && <Body small muted>Choose at least one to continue. Nothing is ticked for you.</Body>}
-      <Button kind="primary" label="Save" onPress={() => ready && (a.done.length ? router.back() : router.push('/questions'))} />
+      {!ready && <Body small muted>Tick at least one in each list to continue. Nothing is ticked for you.</Body>}
+      <Button kind="primary" label="Save" disabled={!ready} onPress={() => (a.setupDone ? router.back() : resetTo('/questions'))} />
     </Screen>
   );
 }

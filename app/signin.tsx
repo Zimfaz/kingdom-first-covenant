@@ -15,8 +15,9 @@ export default function SignIn() {
   return (
     <Screen>
       <Back onPress={() => router.back()} />
-      <Title>Create your account</Title>
+      <Title>Sign in or create an account</Title>
       <Body muted>We’ll email you a code. We never post anything for you.</Body>
+      <Body small muted>This account is yours. Nobody else may set it up or use it for you.</Body>
       <TextInput
         accessibilityLabel="Email address"
         placeholder="Email address"

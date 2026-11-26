@@ -15,7 +15,7 @@ export default function Faith() {
         <Body>“Marriage is a lifelong covenant between one man and one woman.”</Body>
         <Body small muted>The historic teaching of the Church, held today by the Catholic and Orthodox Churches and many others. Covenant introduces people on this basis.</Body>
       </Card>
-      <Verse text="So they are no longer two, but one flesh. Therefore what God has joined together, let man not separate." reference="Matthew 19:6" />
+      <Verse text="For this reason a man will leave his father and mother and be united to his wife, and they will become one flesh." reference="Genesis 2:24" />
       <Button kind="primary" label="Yes, I believe this" onPress={() => router.push('/church')} />
       <TextLink label="I’m still exploring" onPress={() => router.push('/exploring')} />
     </Screen>

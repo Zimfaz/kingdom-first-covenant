@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { Body, Button, Screen, Title } from '@/components/ui';
+import { Body, Button, Screen, TextLink, Title } from '@/components/ui';
 import { FORCED, Lines } from '@/components/helplines';
 
 // Get help now (prototype SH.help). UK only at launch. Numbers checked by the pastoral reviewer on
@@ -16,12 +16,15 @@ const LINES: { head: string; items: [string, string][] }[] = [
 export default function Help() {
   return (
     <Screen>
+      <Button kind="quiet" label="Close" onPress={() => router.back()} />
       <Title>Get help now</Title>
       <Body small muted>If you can’t speak, call 999 and press 55 when asked (mobile).</Body>
       {LINES.map((g) => <Lines key={g.head} head={g.head} items={g.items} />)}
       <Body small muted>Or your church’s safeguarding lead.</Body>
       <Button label="Talk to us privately" onPress={() => router.push('/talk')} />
       <Button label="Report someone" onPress={() => router.push('/report')} />
+      <TextLink label="Marriage in Scripture ›" onPress={() => router.push('/scripture')} />
+      <TextLink label="Still waiting, and a single life ›" onPress={() => router.push('/waiting')} />
       <Button kind="quiet" label="Close" onPress={() => router.back()} />
     </Screen>
   );

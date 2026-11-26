@@ -39,7 +39,7 @@ export default function Talk() {
         </Card>
       ) : null}
       <TextInput accessibilityLabel="Tell us more (optional)" value={text} onChangeText={setText} multiline placeholder="Tell us more, if you’d like" placeholderTextColor={p.muted}
-        style={{ fontFamily: fonts.body, fontSize: 16, color: p.ink, backgroundColor: p.surface, borderColor: p.line, borderWidth: 1.5, borderRadius: radius.button, minHeight: 110, padding: space.l, textAlignVertical: 'top', marginBottom: space.m }} />
+        style={{ fontFamily: fonts.body, fontSize: 16, color: p.ink, backgroundColor: p.surface, borderColor: p.muted, borderWidth: 1.5, borderRadius: radius.button, minHeight: 110, padding: space.l, textAlignVertical: 'top', marginBottom: space.m }} />
       {TEST_BUILD ? <Body small muted>Test version: nothing is sent yet.</Body> : null}
       <Button kind="primary" label="Send to the Covenant team" onPress={() => router.replace({ pathname: '/sent', params: { k: 'talk' } })} />
       <Button kind="quiet" label="Not now" onPress={() => router.back()} />
