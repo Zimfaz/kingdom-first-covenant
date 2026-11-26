@@ -3,7 +3,7 @@ import { Back, Body, Button, Eyebrow, Fold, Label, Opt, Screen, Title } from '@/
 import { resetTo, toggle, useAnswers, type Story } from '@/lib/onboarding';
 
 // Who you're open to (prototype V.open). Teaching summaries are draft until the pastoral reviewer and
-// a reader from each tradition check them.
+// a reader from each church check them.
 const OPEN: [Story, string][] = [
   ['never', 'Never married'], ['widowed', 'Widowed'], ['nullity', 'Divorced, with a declaration of nullity'],
   ['permission', 'Divorced, with church permission to marry again'], ['divorced', 'Divorced'], ['process', 'Declaration of nullity or permission in process']

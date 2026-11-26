@@ -1,5 +1,5 @@
 // Faith and marriage questions (Tier 1), from the prototype's SECS, with the pastoral study of 26 Nov 2026
-// applied. Draft wording: the pastoral reviewer and a reader from each tradition check before testers see it.
+// applied. Draft wording: the pastoral reviewer and a reader from each church check before testers see it. Never say "tradition" on screen (owner, 26 Nov): say church.
 // "Which church families would you be open to?" lives on the Who you're open to screen, not here.
 /** `id` is fixed for good: answers are saved by id, never by position, so wording and order can change.
  * Options are saved by their own fixed ids (optionIds). `fact` = a fact about yourself, so it can't be
@@ -18,7 +18,7 @@ export const SECTIONS: Section[] = [
   ] },
   { k: 'C', name: 'The Church and the sacraments', qs: [
     { id: 'communion', text: 'Holy Communion (the Eucharist, the Lord’s Supper) is…', options: ['the true Body and Blood of Christ', 'Christ truly present in a spiritual way', 'a memorial of His death, which we do as He commanded', 'My church doesn’t celebrate it with bread and wine', 'I’m still learning'], note: 'Christians answer these differently, and your church’s teaching matters. Answer honestly; nothing is scored.' },
-    { id: 'scripture', text: 'How does your church read Scripture?', options: ['Scripture within the Tradition of the Church', 'Scripture as the final authority', 'Scripture, tradition and reason together', 'I’m not sure how to put it'] },
+    { id: 'scripture', text: 'How does your church read Scripture?', options: ['Scripture as the Church has handed it down and taught it', 'Scripture as the final authority', 'Scripture, with the Church’s teaching and reason', 'I’m not sure how to put it'] },
     { id: 'saints', text: 'How do you see asking Mary and the saints to pray for us?', options: ['Asking the Theotokos / Our Lady and the saints to pray for us is part of my faith', 'Not my practice, but I respect it', 'I’m not comfortable with it'] },
     { id: 'confession', text: 'How do you confess your sins?', options: ['I go to confession with a priest', 'I confess to God, sometimes with a pastor or friend', 'Both'] },
     { id: 'child_baptism', text: 'When would your children be baptised?', options: ['Babies are baptised', 'Children are baptised when they come to faith', 'I’d follow our church'] },
