@@ -1,0 +1,24 @@
+name: Expo link
+
+# One-off: checks the EXPO_TOKEN secret and creates or links the Expo (EAS) project under
+# kingdom-first-life-limited. Builds nothing. Linux, manual start.
+on: workflow_dispatch
+
+jobs:
+  link:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Who am I
+        run: npx -y eas-cli@latest whoami
+      - name: Create or link the project
+        run: npx -y eas-cli@latest init --non-interactive --force 2>&1 | tee init.log || true
+      - name: Project ID
+        run: npx -y eas-cli@latest project:info 2>&1 || true

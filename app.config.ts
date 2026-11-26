@@ -6,6 +6,7 @@ import type { ExpoConfig } from 'expo/config';
 const config: ExpoConfig = {
   name: 'Kingdom First Covenant',
   slug: 'kingdom-first-covenant',
+  owner: 'kingdom-first-life-limited',
   scheme: 'kfcovenant',
   version: '0.1.0',
   orientation: 'portrait',
