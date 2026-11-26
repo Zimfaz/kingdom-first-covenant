@@ -37,8 +37,11 @@ export function Row({ title, note, onPress }: { title: string; note?: string; on
   return (
     <Pressable accessibilityRole="button" accessibilityLabel={note ? `${title}, ${note}` : title} onPress={onPress}
       style={({ pressed }) => ({ minHeight: 56, flexDirection: 'row', alignItems: 'center', backgroundColor: p.surface, borderColor: p.line, borderWidth: 1, borderRadius: radius.button, paddingHorizontal: space.l, paddingVertical: space.m, marginBottom: space.s, opacity: pressed ? 0.85 : 1 })}>
-      <Text style={{ flex: 1, fontFamily: fonts.bodySemi, fontSize: 16, lineHeight: 22, color: p.ink }}>{title}</Text>
-      <Text style={{ fontFamily: fonts.body, fontSize: 14, color: p.muted, marginLeft: space.s, maxWidth: '45%', textAlign: 'right' }}>{note ?? '›'}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, lineHeight: 22, color: p.ink }}>{title}</Text>
+        {note ? <Text style={{ fontFamily: fonts.body, fontSize: 14, lineHeight: 20, color: p.muted }}>{note}</Text> : null}
+      </View>
+      <Text style={{ fontFamily: fonts.bodySemi, fontSize: 18, color: p.muted, marginLeft: space.s }}>›</Text>
     </Pressable>
   );
 }

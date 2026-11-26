@@ -11,7 +11,7 @@ export function Lines({ head, items }: { head: string; items: [string, string][]
         <Pressable key={name} accessibilityRole="link" accessibilityLabel={`Call ${name}, ${num}`} onPress={() => Linking.openURL('tel:' + num.replace(/\s/g, ''))}
           style={{ minHeight: TAP, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomColor: p.line, borderBottomWidth: 1 }}>
           <Text style={{ fontFamily: fonts.body, fontSize: 15, lineHeight: 21, color: p.ink, flex: 1, paddingRight: space.s, paddingVertical: space.xs }}>{name}</Text>
-          <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: p.accent }}>{num}</Text>
+          <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: p.accent, flexShrink: 0 }}>{num}</Text>
         </Pressable>
       ))}
     </View>
