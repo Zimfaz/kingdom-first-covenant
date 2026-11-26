@@ -17,6 +17,7 @@ const config: ExpoConfig = {
   plugins: ['expo-router', 'expo-secure-store', 'expo-font', 'expo-status-bar'],
   experiments: { typedRoutes: true },
   extra: {
+    eas: { projectId: '70abf57c-6a8a-4152-8103-e43926513e85' },
     supabaseUrl: 'https://afiyphuubmefjaofbmbx.supabase.co',
     // Publishable key: safe in the app; row level security protects the data (covenant/supabase-link.md).
     supabaseKey: 'sb_publishable_EKWysWv3RyKAJo5lEMmX4A_J4fDFeXR'
