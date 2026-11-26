@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { Back, Button, Eyebrow, Field, Label, Opt, Screen, Title } from '@/components/ui';
+import { Back, Body, Button, Eyebrow, Field, Label, Opt, Screen, Title } from '@/components/ui';
 import { useAnswers } from '@/lib/onboarding';
 
 // About you (prototype V.basics).
