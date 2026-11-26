@@ -36,7 +36,7 @@ export default function Open() {
       <Label>Church families</Label>
       {TRADS.map((k) => <Opt key={k} multi label={k} on={a.openTrad.includes(k)} onPress={() => set({ openTrad: toggle(a.openTrad, k) })} />)}
       {!ready && <Body small muted>Choose at least one to continue. Nothing is ticked for you.</Body>}
-      <Button kind="primary" label="Save" onPress={() => ready && router.push('/saved')} />
+      <Button kind="primary" label="Save" onPress={() => ready && (a.done.length ? router.back() : router.push('/questions'))} />
     </Screen>
   );
 }

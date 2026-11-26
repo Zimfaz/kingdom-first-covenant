@@ -1,14 +1,59 @@
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View, type TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import { fonts, radius, space, TAP, usePalette } from '@/theme';
 
-export function Screen({ children }: { children: React.ReactNode }) {
+export type Tab = 'home' | 'intros' | 'me';
+const TABS: [Tab, string, string][] = [['home', 'Home', '/home'], ['intros', 'Introductions', '/intros'], ['me', 'Me', '/me']];
+
+/** A page. With `tab`, the tab bar sits at the bottom, above the home bar (safe area). */
+export function Screen({ children, tab }: { children: React.ReactNode; tab?: Tab }) {
   const p = usePalette();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: p.bg }} edges={['top', 'bottom', 'left', 'right']}>
       <ScrollView contentContainerStyle={{ padding: space.xl, paddingBottom: space.xxl }}>{children}</ScrollView>
+      {tab && (
+        <View accessibilityRole="tablist" style={{ flexDirection: 'row', borderTopWidth: 1, borderTopColor: p.line, backgroundColor: p.surface }}>
+          {TABS.map(([k, label, href]) => {
+            const on = k === tab;
+            return (
+              <Pressable key={k} accessibilityRole="tab" accessibilityState={{ selected: on }} onPress={() => !on && router.replace(href as never)}
+                style={{ flex: 1, minHeight: 56, alignItems: 'center', justifyContent: 'center', paddingHorizontal: space.xs }}>
+                <Text style={{ fontFamily: on ? fonts.bodySemi : fonts.body, fontSize: 14, color: on ? p.accent : p.muted, textAlign: 'center' }}>{label}</Text>
+                <View style={{ height: 3, width: 28, borderRadius: 2, marginTop: 4, backgroundColor: on ? p.accent : 'transparent' }} />
+              </Pressable>
+            );
+          })}
+        </View>
+      )}
     </SafeAreaView>
+  );
+}
+
+/** A tappable row with a title and a quiet note on the right (Me, the question groups, Help). */
+export function Row({ title, note, onPress }: { title: string; note?: string; onPress: () => void }) {
+  const p = usePalette();
+  return (
+    <Pressable accessibilityRole="button" accessibilityLabel={note ? `${title}, ${note}` : title} onPress={onPress}
+      style={({ pressed }) => ({ minHeight: 56, flexDirection: 'row', alignItems: 'center', backgroundColor: p.surface, borderColor: p.line, borderWidth: 1, borderRadius: radius.button, paddingHorizontal: space.l, paddingVertical: space.m, marginBottom: space.s, opacity: pressed ? 0.85 : 1 })}>
+      <Text style={{ flex: 1, fontFamily: fonts.bodySemi, fontSize: 16, lineHeight: 22, color: p.ink }}>{title}</Text>
+      <Text style={{ fontFamily: fonts.body, fontSize: 14, color: p.muted, marginLeft: space.s, maxWidth: '45%', textAlign: 'right' }}>{note ?? '›'}</Text>
+    </Pressable>
+  );
+}
+
+/** An on/off row, e.g. "This matters a lot to me". */
+export function Toggle({ label, on, onPress }: { label: string; on: boolean; onPress: () => void }) {
+  const p = usePalette();
+  return (
+    <Pressable accessibilityRole="switch" accessibilityState={{ checked: on }} onPress={onPress}
+      style={{ minHeight: 52, flexDirection: 'row', alignItems: 'center', paddingVertical: space.s, marginVertical: space.s }}>
+      <Text style={{ flex: 1, fontFamily: fonts.bodySemi, fontSize: 16, lineHeight: 22, color: p.ink }}>{label}</Text>
+      <View style={{ width: 48, height: 28, borderRadius: 14, padding: 3, backgroundColor: on ? p.accent : p.line, alignItems: on ? 'flex-end' : 'flex-start' }}>
+        <View style={{ width: 22, height: 22, borderRadius: 11, backgroundColor: p.surface }} />
+      </View>
+    </Pressable>
   );
 }
 
