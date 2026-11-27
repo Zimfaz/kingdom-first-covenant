@@ -122,3 +122,8 @@ section.tight{padding:96px 112px 120px;gap:28px}
 .mini .row p{font-size:26px;color:#D9D2E6}
 .mini .row p b{color:var(--light)}
 .goal{font-family:var(--display);font-style:italic;font-weight:600;font-size:38px;line-height:1.2;color:#CBAA6A;margin:0}
+/* drafting standards: no orphan words, labels never break */
+section p,section li,section h3{text-wrap:pretty}
+section h2{text-wrap:balance}
+.pill,.chips span,.tag,.tl span,.tl b{white-space:nowrap}
+.churches{grid-template-columns:repeat(2,116px);justify-content:center;gap:14px 36px}
