@@ -112,3 +112,5 @@ section.tight{padding:96px 112px 120px;gap:28px}
 .shield{width:72px;height:84px;background:#CBAA6A;clip-path:path('M36 0 L72 13 L72 42 C72 64 56 78 36 84 C16 78 0 64 0 42 L0 13 Z');display:flex;align-items:center;justify-content:center;align-self:center}
 .shield svg{width:36px;height:36px}
 .say{font-family:var(--display);font-style:italic;font-weight:600;font-size:36px;line-height:1.2;color:var(--light);text-align:center}
+.goal{font-family:var(--display);font-style:italic;font-weight:600;font-size:40px;line-height:1.2;color:#CBAA6A;margin:0;text-align:center}
+#overview{gap:22px}#overview .disc{width:116px;height:116px}#overview .disc svg{width:54px;height:54px}#overview .flow::before{top:58px}#overview h2.hd{font-size:58px}#overview .node{gap:10px}#overview .node h3{font-size:36px}

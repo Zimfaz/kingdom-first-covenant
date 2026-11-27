@@ -117,3 +117,8 @@ section.tight{padding:96px 112px 120px;gap:28px}
 .shield{width:72px;height:84px;background:#CBAA6A;clip-path:path('M36 0 L72 13 L72 42 C72 64 56 78 36 84 C16 78 0 64 0 42 L0 13 Z');display:flex;align-items:center;justify-content:center;align-self:center}
 .shield svg{width:36px;height:36px}
 .say{font-family:var(--display);font-style:italic;font-weight:600;font-size:36px;line-height:1.2;color:var(--light);text-align:center}
+.mini{display:flex;flex-direction:column;gap:14px}
+.mini .row{align-items:center}
+.mini .row p{font-size:26px;color:#D9D2E6}
+.mini .row p b{color:var(--light)}
+.goal{font-family:var(--display);font-style:italic;font-weight:600;font-size:38px;line-height:1.2;color:#CBAA6A;margin:0}
