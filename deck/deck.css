@@ -65,3 +65,12 @@ section{position:relative}
 .st3 .blk{height:250px;background:#B9787A;color:#FFF}
 .st4 .blk{height:330px;background:#9A4652;color:#FFF}
 .st5 .blk{height:410px;background:var(--wine);color:#FFF}
+/* wordmark on one line like Kingdom First Life (owner, 27 Nov): KINGDOM FIRST caps, then the name in italic at the same size */
+.wm{flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:22px;row-gap:0}
+.wm>svg{order:1}
+.wm::before{content:"";order:2;flex-basis:100%;height:28px}
+.wm .wm1{order:3;font-weight:700;font-size:56px;letter-spacing:.16em;margin:0}
+.wm .wm2{order:4;font-style:italic;font-weight:500;font-size:56px;letter-spacing:.02em;margin:0}
+.lw{flex-direction:row;align-items:baseline;gap:10px;white-space:nowrap}
+.lw b{font-weight:700;font-size:24px;letter-spacing:.16em}
+.lw i{font-weight:500;font-size:24px;letter-spacing:.02em;margin:0}

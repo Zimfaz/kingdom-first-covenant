@@ -131,3 +131,5 @@ section h2{text-wrap:balance}
 .wmr>div{display:flex;align-items:baseline;gap:18px;white-space:nowrap}
 .wmr .wm1{font-family:var(--display);font-weight:700;font-size:50px;letter-spacing:.16em;color:var(--light);margin:0}
 .wmr .wm2{font-family:var(--display);font-style:italic;font-weight:500;font-size:50px;line-height:1;letter-spacing:.02em;color:#E4A6A0;margin:0}
+
+.dia{position:relative;width:780px;height:380px;align-self:center}.circle-dia{width:780px;height:380px}.dlab{position:absolute;margin:0;font-family:var(--display);font-weight:700;line-height:1.24;text-align:center;white-space:nowrap}
