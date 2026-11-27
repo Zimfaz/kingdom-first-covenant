@@ -39,8 +39,8 @@ const html=`<!doctype html><meta charset="utf-8"><style>${fonts}
 :root{--navy:#19203A;--wine:#7B2D3B;--wl:#E4A6A0;--gold:#CBAA6A;--cream:#F3EEE4;--ink:#2A1840;--muted:#645A73;--line:#E4DDEB;--sunk:#F3F0EA}
 body{margin:0;font-family:IN,Arial,sans-serif;color:var(--ink);font-size:10pt;line-height:1.45}
 .cover{background:var(--navy);color:var(--cream);border-radius:12px;padding:12mm 12mm 10mm}
-.brand{display:flex;align-items:center;gap:16px}.logo{width:64px;height:64px;border-radius:14px;box-shadow:0 0 0 1px #3A4466}
-.wm1{font-family:CG;font-weight:600;font-size:15pt;letter-spacing:5px}.wm2{font-family:CG;font-style:italic;font-weight:600;font-size:36pt;line-height:.95;color:var(--wl)}
+.brand{display:flex;align-items:center;gap:16px}.logo{width:52px;height:52px;border-radius:14px;box-shadow:0 0 0 1px #3A4466}
+.brand>div{display:flex;align-items:baseline;gap:7px;white-space:nowrap}.wm1{font-family:CG;font-weight:700;font-size:17pt;letter-spacing:.16em}.wm2{font-family:CG;font-style:italic;font-weight:500;font-size:17pt;letter-spacing:.02em;color:var(--wl)}
 .rule{width:56px;height:3px;background:var(--gold);border-radius:2px;margin:22px 0 14px}
 .cover h1{font-family:CG;font-weight:600;font-size:30pt;line-height:1.1;margin:0 0 8px}
 .cover .tl{font-family:CG;font-style:italic;font-weight:500;font-size:15pt;color:var(--cream);opacity:.92;margin:0}
